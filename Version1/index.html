@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+
+    <link href="./styles/index.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="jquery/ui/jquery-ui.min.css" rel="stylesheet">
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="jquery/ui/jquery-ui.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script-->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+
+    <title>FFI Options</title>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>FIRST FINANCE Institute: Black-Scholes and Greeks</h1>
+
+    <Blockquote>
+        Understanding how option pricing works!
+    </Blockquote>
+
+    <div class="col-xs-4">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+
+                <h3 class="panel-title">Parameters</h3>
+
+            </div>
+
+            <div class="panel-body">
+
+                <form role="form">
+
+                    <div class="form-group">
+                        <label class="parameters">Stock Price (S): </label>
+                        <div id="stock"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="parameters">Strike Price (K): </label>
+                        <div id="strike"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="parameters">Risk-Free Rate (r): </label>
+                        <div id="risk"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="parameters">Annual Dividend Yield (q): </label>
+                        <div id="dividend"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="parameters">Time to Maturity (T-t): </label>
+                        <div id="maturity"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="parameters">Volatility (): </label>
+                        <div id="volatility"></div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primary">
+                    Reset
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-xs-8">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary">Value</button>
+                    <button type="button" class="btn btn-primary">Delta</button>
+                    <button type="button" class="btn btn-primary">Gamma</button>
+                    <button type="button" class="btn btn-primary">Vega</button>
+                    <button type="button" class="btn btn-primary">Rho</button>
+                </div>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Prices</h3>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script src="./scripts/index.js"></script>
+
+</body>
+</html>
