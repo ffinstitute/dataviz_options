@@ -9,13 +9,13 @@ if(x<0.0)
 else
 	{k = 1.0 / (1.0 + 0.2316419 * x);
 	return 1.0 - Math.exp(-x * x / 2.0)/ Math.sqrt(2*Math.PI) * k
-	* (a1 + k * (-0.356563782 + k * (1.781477937 + k * (-1.821255978 + k * 1.330274429)))) ;
+     * (a1 + k * (-0.356563782 + k * (1.781477937 + k * (-1.821255978 + k * 1.330274429)))) ;
 	}
 }
 
 function SND(x){
 
-  return  Math.exp(-x * x / 2.0)/ Math.sqrt(2*Math.PI)
+  return  Math.exp(-x * x / 2.0)/ Math.sqrt(2*Math.PI);
 }
 
 

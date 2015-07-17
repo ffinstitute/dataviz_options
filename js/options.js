@@ -2,13 +2,13 @@
 
 
 
-var totalw = 800
+var totalw = 800;
 
 var w = 400;
 var leftPadding = 30;
 var rightPadding = 30;
 
-var uw = w - leftPadding - rightPadding
+var uw = w - leftPadding - rightPadding;
 var iterations = uw / 2;
 
 var topPadding = 10;
@@ -113,9 +113,10 @@ var main = function(){
     
     };
 
-var callPremium, putPremium, callDelta, putDelta, spotForward; 
+var callPremium, putPremium, callDelta, putDelta, spotForward;
 
 function update(){
+
 
 	Spot=$("#sliderSpot").slider("value");
 	Strike=$("#sliderStrike").slider("value");
