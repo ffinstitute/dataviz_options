@@ -45,23 +45,23 @@
 
                 </div>
 
-                <div  id="parameters" class="panel-body">
+                <div class="panel-body">
 
                     <form class="col-xs-6" role="form">
 
                         <div class="form-group">
-                            <label class="parameters">Stock Price (S): </label>
-                            <div id="stock"></div>
+                            <label id="Stock">Stock Price (S) = <span></span> $</label>
+                            <div id="sliderStock"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="parameters">Strike Price (K): </label>
-                            <div id="strike"></div>
+                            <label id="Strike">Strike Price (K) = <span></span> $</label>
+                            <div id="sliderStrike"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="parameters">Risk-Free Rate (r): </label>
-                            <div id="risk"></div>
+                            <label id="Risk">Risk-Free Rate (r) = <span></span>%</label>
+                            <div id="sliderRisk"></div>
                         </div>
 
                     </form>
@@ -69,28 +69,28 @@
                     <form class="col-xs-6" role="form">
 
                         <div class="form-group">
-                            <label class="parameters">Annual Dividend Yield (q): </label>
-                            <div id="dividend"></div>
+                            <label id="Dividend">Annual Dividend Yield (q) = <span></span>%</label>
+                            <div id="sliderDividend"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="parameters">Time to Maturity (T-t): </label>
-                            <div id="maturity"></div>
+                            <label id="Maturity">Time to Maturity (τ) = <span></span></label>
+                            <div id="sliderMaturity"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="parameters">Volatility (): </label>
-                            <div id="volatility"></div>
+                            <label id="Volatility">Volatility (σ) = <span></span>%</label>
+                            <div id="sliderVolatility"></div>
                         </div>
 
                     </form>
 
-                </div>
+                    <div>
+                        <button id="btnReset"  type="reset" class="btn btn-primary" style="float: right;">
+                            Reset
+                        </button>
+                    </div>
 
-                <div>
-                    <button type="button" class="btn btn-primary">
-                        Reset
-                    </button>
                 </div>
 
             </div>
@@ -99,15 +99,57 @@
                 <div class="panel-heading">
 
                         <h3 class="panel-title">Prices</h3>
-                        <div class="btn-group" role="group" style="float: right;">
-                            <button  type="button" class="btn btn-primary">Call</button>
-                            <button  type="button" class="btn btn-primary">Put</button>
-                        </div>
 
                 </div>
+
                 <div  id="prices" class="panel-body">
-                       <p></p>
+
+                    <div>
+
+                        <form class="col-xs-6" role="form">
+                            <div class="form-group">
+                                <label id="Drift">Drift = <span></span>%</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Premium = <span></span></label>
+                            </div>
+                            <div class="form-group">
+                                <label>Premium (%) = <span></span></label>
+                            </div>
+                            <div class="form-group">
+                                <label>Delta = <span></span></label>
+                            </div>
+                        </form>
+
+                        <form class="col-xs-6" role="form">
+
+                            <div class="form-group">
+                                <label id="Forward">Forward = <span></span> $</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="Gamma">Gamma = <span></span></label>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="Vega">Vega = <span></span></label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Rho = <span></span></label>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="btn-group" role="group" style="float: right;">
+                        <button  id="btnCall" type="button" class="btn btn-primary">Call</button>
+                        <button  id="btnPut" type="button" class="btn btn-primary">Put</button>
+                    </div>
+
                 </div>
+
             </div>
 
     </div>
@@ -133,11 +175,11 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary">Value</button>
-                    <button type="button" class="btn btn-primary">Delta</button>
-                    <button type="button" class="btn btn-primary">Gamma</button>
-                    <button type="button" class="btn btn-primary">Vega</button>
-                    <button type="button" class="btn btn-primary">Rho</button>
+                    <button id="btnValue" type="button" class="btn btn-primary">Value</button>
+                    <button id="btnDelta" type="button" class="btn btn-primary">Delta</button>
+                    <button id="btnGamma" type="button" class="btn btn-primary">Gamma</button>
+                    <button id="btnVega" type="button" class="btn btn-primary">Vega</button>
+                    <button id="btnRho" type="button" class="btn btn-primary">Rho</button>
                 </div>
             </div>
             <div id="selectGraphs" class="panel-body">
@@ -149,6 +191,9 @@
 
 </div>
 
+<button type="button"><span class="glyphicon glyphicon-print"></span></button>
+
+<!--script src="./scripts/formulesV1.js"></script-->
 <script src="./scripts/index.js"></script>
 
 </body>
