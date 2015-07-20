@@ -4,15 +4,10 @@
 
 /* jshint browser: true, jquery: true */
 
+
 ;(function($, d3){
 
     'use strict';
-
-    var S, K, T, q, r, v;
-
-    var d1, d2;
-    d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
-    d2 = d1 - v * Math.sqrt(T);
 
     function CND(x){
 
@@ -37,8 +32,12 @@
         return  Math.exp(-x * x / 2.0)/ Math.sqrt(2*Math.PI);
     }
 
+    function BlackScholes(PutCallFlag, S, K, T, q, r, v) {
 
-    function BlackScholes(PutCallFlag, S, K, T, q, r) {
+        var d1, d2;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
+        d2 = d1 - v * Math.sqrt(T);
 
         if (PutCallFlag === 'c'){
             return Math.exp(-q*T) * S * CND(d1) - Math.exp(-r*T) * K * CND(d2);
@@ -52,7 +51,12 @@
         return S * Math.exp((r-q)*T);
     }
 
-    function Delta(PutCallFlag, T, q) {
+    function Delta(PutCallFlag, S, K, T, q, r, v) {
+
+        var d1, d2;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
+        d2 = d1 - v * Math.sqrt(T);
 
         if (PutCallFlag === 'c'){
             return Math.exp(-q*T) * CND(d1);
@@ -62,20 +66,34 @@
         }
     }
 
-    function Gamma(S, T, r, v) {
+    function Gamma(S, K, T, q, r, v) {
+
+        var d1, d2;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
+        d2 = d1 - v * Math.sqrt(T);
 
         return Math.exp(-r*T) * SND(d1) / (S*v*Math.sqrt(T));
 
     }
 
-    function Vega(S, T, q){
+    function Vega(S, K, T, q, r, v){
+
+        var d1;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
 
         return S * Math.exp(-q * T) * SND(d1) * Math.sqrt(T);
         // Or return K * Math.exp(-r * T) * SND(d2) * Math.sqrt(T);
 
     }
 
-    function Rho(PutCallFlag, K, T, r){
+    function Rho(PutCallFlag, S, K, T, q, r, v){
+
+        var d1, d2;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
+        d2 = d1 - v * Math.sqrt(T);
 
         if (PutCallFlag === 'c'){
             return K * T * Math.exp(-r * T) * CND(d2);
@@ -89,54 +107,90 @@
   $(document).ready(function(){
 
       $('#sliderStock').slider({
+          range: 'max',
           min: 1,
           max: 200,
           step: 1,
           value: 100,
+          slide: function( event, ui ) {
+              $('#Stock span').html(ui.value);
+          },
           change:function(){update();}
       });
 
       $('#sliderStrike').slider({
+          range: 'max',
           min: 1,
           max: 200,
           step: 1,
           value: 100,
+          //handle:
+          slide: function( event, ui ) {
+              $('#Strike span').html(ui.value);
+          },
           change:function(){update();}
       });
 
       $('#sliderRisk').slider({
+          range: 'max',
           min: -0.1,
           max: 0.1,
           step: 0.005,
           value: 0.0,
+          //handle:
+          slide: function( event, ui ) {
+              $('#Risk span').html(Math.round(ui.value * 10000) / 100);
+          },
           change:function(){update();}
       });
 
       $('#sliderDividend').slider({
+          range: 'max',
           min: -0.1,
           max: 0.1,
           step: 0.005,
           value: 0.0,
+          //handle: '#00297B',
+          slide: function( event, ui ) {
+              $('#Dividend span').html(Math.round(ui.value * 10000) / 100);
+          },
           change:function(){update();}
       });
 
       $('#sliderMaturity').slider({
+          range: 'max',
           min: 0,
           max: 5,
           step: 0.1,
           value: 2.5,
-          change:function(){update();}
+          slide: function( event, ui ) {
+                $('#Maturity span').html(ui.value);
+          },
+          change: function(){update();}
       });
 
       $('#sliderVolatility').slider({
+          range: 'max',
           min: 0.05,
           max: 0.5,
           step: 0.01,
           value: 0.4,
+          //handle:
+          slide: function ( event, ui ) {
+              $('#Volatility span').html(Math.round(ui.value * 10000) / 100);
+          },
           change:function(){update();}
       });
 
       setTimeout(update,10);
+
+      $('.ui-slider').css('background','#00297B');
+
+      $('.ui-slider-handle').css('border-color', '#00297B');
+
+      $('#btnCall').addClass('active');
+
+      // $('#btnValue').addClass('active');
 
   });
 
@@ -148,20 +202,6 @@
         $('#sliderMaturity').slider('value', 2.5 );
         $('#sliderVolatility').slider('value', 0.4 );
     });
-
-    /* $('#btnCall').click(function(){
-
-    });                                     // TODO: Configure 'Call' and 'Put' buttons
-
-    $('btnPut').click(function(){
-
-    });
-
-    $('#btnValue').click(function(){});     // TODO: Configure buttons to switch graphs
-    $('#btnDelta').click(function(){});
-    $('#btnGamma').click(function(){});
-    $('#btnVega').click(function(){});
-    $('#btnRho').click(function(){});   */
 
     var callPremium, putPremium, callDelta, putDelta, callRho, putRho, spotForward, spotGamma, spotVega;
 
@@ -176,49 +216,66 @@
 
        var Drift = Q - R;
 
-        spotForward = new Forward(Stock, Mat, Q, R);
+        spotForward = Forward(Stock, Mat, Q, R);
 
-        spotGamma = new Gamma(Stock, Mat, R, Vol);
+        spotGamma = Gamma(Stock, Strike, Mat, R, Q, Vol);
 
-        spotVega = new Vega(Stock, Mat, Q);
+        spotVega = Vega(Stock, Strike, Mat, R, Q, Vol);
 
-        callPremium = new BlackScholes('c', Stock, Strike, Mat, Q, R);
+        callPremium = BlackScholes('c', Stock, Strike, Mat, R, Q, Vol);
 
-        putPremium = new BlackScholes('p', Stock, Strike, Mat, Q, R);
+        putPremium = BlackScholes('p', Stock, Strike, Mat, R, Q, Vol);
 
-        callDelta = new Delta('c', Mat, Q);
+        callDelta = Delta('c', Stock, Strike, Mat, R, Q, Vol);
 
-        putDelta = new Delta('p', Mat, Q);
+        putDelta = Delta('p', Stock, Strike, Mat, R, Q, Vol);
 
-        callRho = new Rho('c', Strike, Mat, R);
+        callRho = Rho('c', Stock, Strike, Mat, R, Q, Vol);
 
-        putRho = new Rho('p', Strike, Mat, R);
+        putRho = Rho('p', Stock, Strike, Mat, R, Q, Vol);
 
         $('#Stock span').html(Stock);
         $('#Strike span').html(Strike);
-        $('#Risk span').html(100 * R);
-        $('#Dividend span').html(100 * Q);
+        $('#Risk span').html(1000 * R / 10);
+        $('#Dividend span').html(1000 * Q / 10);
         $('#Maturity span').html(Mat);
-        $('#Volatility span').html(100*Vol);
+        $('#Volatility span').html(1000 * Vol / 10);
 
-        $('#Drift span').html(Math.round(10000*Drift)/100);
-        $('#Forward span').html(Math.round(100*spotForward)/100);
+        $('#Drift span').html(Math.round(10000 * Drift)/100);
+        $('#Forward span').html(Math.round(100 * spotForward)/100);
 
-        //$('#Gamma span').html(Math.round()/);
+        //window.console.log(Math.round(100 * spotForward)/100, spotForward);
 
+        $('#Gamma span').html(Math.round(10000 * spotGamma)/10000);
+        $('#Vega span').html(Math.round(100 * spotVega)/100);
 
-
-
-       /* $('#callPremium span').html(Math.round(callPremium*100)/100);
-        $('#callPremiumPct span').html(Math.round(callPremium/Spot*10000)/100);     TODO: Work on the "Call" and "Put" buttons
-        $('#putPremium span').html(Math.round(putPremium*100)/100);
-        $('#putPremiumPct span').html(Math.round(putPremium/Spot*10000)/100);
-
-        $('#callDelta span').html(Math.round(callDelta*10000)/10000);
-        $('#putDelta span').html(Math.round(putDelta*10000)/10000); */
-
-        window.console.log('hello');
+        if ($('#btnCall').hasClass('active') === true){
+            $('#Premium span').html(Math.round(callPremium*100)/100);
+            $('#PremiumPct span').html(Math.round(callPremium/Stock*10000)/100);
+            $('#Delta span').html(Math.round(callDelta*10000)/10000);
+            $('#Rho span').html(Math.round(callRho*10000)/10000);
+            }
+        else{
+            $('#Premium span').html(Math.round(putPremium*100)/100);
+            $('#PremiumPct span').html(Math.round(putPremium/Stock*10000)/100);
+            $('#Delta span').html(Math.round(putDelta*10000)/10000);
+            $('#Rho span').html(Math.round(putRho*10000)/10000);
+            }
     }
+
+    $('#btnPut').click(function(){
+        $('#btnCall').removeClass('active');
+        $('#btnPut').addClass('active');
+        update();
+    });
+
+    $('#btnCall').click(function(){
+        $('#btnPut').removeClass('active');
+        $('#btnCall').addClass('active');
+        update();
+    });
+
+
 
 }(jQuery, window.d3));
 
