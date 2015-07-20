@@ -55,13 +55,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label id="Strike">Strike Price (K) = <span></span> $</label>
-                            <div id="sliderStrike"></div>
+                            <label id="Risk">Risk-Free Rate (r) = <span></span>%</label>
+                            <div id="sliderRisk"></div>
                         </div>
 
                         <div class="form-group">
-                            <label id="Risk">Risk-Free Rate (r) = <span></span>%</label>
-                            <div id="sliderRisk"></div>
+                            <label id="Maturity">Time to Maturity (τ) = <span></span></label>
+                            <div id="sliderMaturity"></div>
                         </div>
 
                     </form>
@@ -69,13 +69,13 @@
                     <form class="col-xs-6" role="form">
 
                         <div class="form-group">
-                            <label id="Dividend">Annual Dividend Yield (q) = <span></span>%</label>
-                            <div id="sliderDividend"></div>
+                            <label id="Strike">Strike Price (K) = <span></span> $</label>
+                            <div id="sliderStrike"></div>
                         </div>
 
                         <div class="form-group">
-                            <label id="Maturity">Time to Maturity (τ) = <span></span></label>
-                            <div id="sliderMaturity"></div>
+                            <label id="Dividend">Annual Dividend Yield (q) = <span></span>%</label>
+                            <div id="sliderDividend"></div>
                         </div>
 
                         <div class="form-group">
@@ -96,6 +96,7 @@
             </div>
 
             <div class="panel panel-primary">
+
                 <div class="panel-heading">
 
                         <h3 class="panel-title">Prices</h3>
@@ -107,18 +108,23 @@
                     <div>
 
                         <form class="col-xs-6" role="form">
+
                             <div class="form-group">
                                 <label id="Drift">Drift = <span></span>%</label>
                             </div>
+
                             <div class="form-group">
-                                <label>Premium = <span></span></label>
+                                <label id="Premium" class="putCall">Premium = <span></span> $</label>
                             </div>
+
                             <div class="form-group">
-                                <label>Premium (%) = <span></span></label>
+                                <label id="Delta" class="putCall">Delta = <span></span></label>
                             </div>
+
                             <div class="form-group">
-                                <label>Delta = <span></span></label>
+                                <label id="Gamma">Gamma = <span></span></label>
                             </div>
+
                         </form>
 
                         <form class="col-xs-6" role="form">
@@ -128,7 +134,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label id="Gamma">Gamma = <span></span></label>
+                                <label id="PremiumPct" class="putCall">Premium (%) = <span></span>%</label>
                             </div>
 
                             <div class="form-group">
@@ -136,7 +142,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Rho = <span></span></label>
+                                <label id="Rho" class="putCall">Rho = <span></span></label>
                             </div>
 
                         </form>
@@ -163,6 +169,16 @@
             </div>
 
             <div  id="allGraphs" class="panel-body">
+
+                <div id="mainGraph"></div>
+
+                <div id="deltaGraph"></div>
+
+                <div id="gammaGraph"></div>
+
+                <div id="vegaGraph"></div>
+
+                <div id="rhoGraph"></div>
 
             </div>
 
@@ -191,7 +207,6 @@
 
 </div>
 
-<button type="button"><span class="glyphicon glyphicon-print"></span></button>
 
 <!--script src="./scripts/formulesV1.js"></script-->
 <script src="./scripts/index.js"></script>
