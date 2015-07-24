@@ -261,6 +261,8 @@
             $('#Delta span').html(Math.round(putDelta*10000)/10000);
             $('#Rho span').html(Math.round(putRho*10000)/10000);
             }
+
+
     }
 
     $('#btnPut').click(function(){
