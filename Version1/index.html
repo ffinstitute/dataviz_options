@@ -33,11 +33,13 @@
 
     <Blockquote>Understanding how option pricing works!</Blockquote>
 
-    <div class="col-xs-7">
+    <div class="col-xs-6">
 
-            <div name="divParameters" class="panel panel-primary">
+            <div name="divParameters" class="panel panel-primary" style="display: block">
 
                 <div class="panel-heading">
+
+                    <button id="btnReset" class="btn btn-primary btn-xs pull-right" style="display: inline-block"><i class="glyphicon glyphicon-refresh"></i></button>
 
                     <h3 class="panel-title">Parameters</h3>
 
@@ -83,17 +85,11 @@
 
                     </form>
 
-                    <div>
-                        <button id="btnReset"  type="reset" class="btn btn-primary" style="float: right;">
-                            Reset
-                        </button>
-                    </div>
-
                 </div>
 
             </div>
 
-            <div name="divPrices" class="panel panel-primary">
+            <div name="divPrices" class="panel panel-primary" style="display: block">
 
                 <div class="panel-heading">
 
@@ -101,15 +97,97 @@
 
                 </div>
 
-                <div  id="prices" class="panel-body">
+                <div class="panel-body">
 
                     <div>
 
-                        <form class="col-xs-6" role="form">
+                        <table class="table table-hover">
 
-                            <h4 class="putCall" >Call</h4>
+                            <thead>
 
-                            <div class="form-group">
+                                <th></th>
+                                <th class="Put-Call" style="text-align: right">(!)</th>
+                                <th class="Put-Call" style="text-align: right">Call</th>
+                                <th class="Put-Call" style="text-align: right">Put</th>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td style="font-weight: bold">Forward</td>
+                                    <td id="Forward" style="text-align: right"><span></span> $</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold">Drift</td>
+                                    <td id="Drift" style="text-align: right"><span></span>%</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Premium</td>
+                                    <td></td>
+                                    <td id="callPremium" style="text-align: right"><span></span> $</td>
+                                    <td id="putPremium" style="text-align: right"><span></span> $</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold">Premium (%)</td>
+                                    <td></td>
+                                    <td id="callPremiumPct" style="text-align: right"><span></span>%</td>
+                                    <td id="putPremiumPct" style="text-align: right"><span></span>%</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Delta</td>
+                                    <td></td>
+                                    <td id="callDelta" style="text-align: right"><span></span></td>
+                                    <td id="putDelta" style="text-align: right"><span></span></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Gamma</td>
+                                    <td id="Gamma" style="text-align: right"><span></span></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Vega</td>
+                                    <td id="Vega" style="text-align: right"><span></span></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Rho</td>
+                                    <td></td>
+                                    <td id="callRho" style="text-align: right"><span></span></td>
+                                    <td id="putRho" style="text-align: right"><span></span></td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                            <!--div class="form-group pull-right">
                                 <label id="callPremium">Premium = <span></span> $</label>
                             </div>
 
@@ -133,15 +211,11 @@
 
                             <div class="form-group">
                                 <label id="Gamma">Gamma = <span></span></label>
-                            </div>
+                            </div-->
 
-                        </form>
 
-                        <form class="col-xs-6" role="form">
 
-                            <h4 class="putCall">Put</h4>
-
-                            <div class="form-group">
+                            <!--div class="form-group">
                                 <label id="putPremium">Premium = <span></span> $</label>
                             </div>
 
@@ -165,17 +239,13 @@
 
                             <div class="form-group">
                                 <label id="Vega">Vega = <span></span></label>
-                            </div>
-
-                        </form>
-
-                    </div>
+                            </div-->
 
                 </div>
 
             </div>
 
-            <div name="divScenario" class="panel panel-primary">
+            <div name="divScenario" class="panel panel-primary" style="display: block">
 
                 <div class="panel-heading">
 
@@ -199,25 +269,15 @@
 
     </div>
 
-    <div class="col-xs-5">
+    <div class="col-xs-6">
 
-            <div name="divGraphs" class="panel panel-primary">
+            <div id="divGraphs" class="panel panel-primary" style="display: block">
 
             <div class="panel-heading">
                 <h3 class="panel-title">Graphs</h3>
             </div>
 
-            <div class="panel-body">
-
-                <div id="mainGraph"></div>
-
-                <div id="deltaGraph"></div>
-
-                <div id="gammaGraph"></div>
-
-                <div id="vegaGraph"></div>
-
-                <div id="rhoGraph"></div>
+            <div id="allGraphs" class="panel-body">
 
             </div>
 
