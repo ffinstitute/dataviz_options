@@ -162,6 +162,8 @@
 
     }
 
+    var callLineData = [];
+
     function callCurve(K, T, q, r, v){
 
         callLineData = [];
@@ -211,7 +213,55 @@
 
     }
 
-    var callLineData = [];
+    var pullLineData = [];
+
+    function putCurve (K, T, q, r, v){
+
+        pullLineData = [];
+
+        for (var i = 0; i < width ; i +=2) {
+
+            var x = i  * 2 *  K / width;
+
+            var y, delta, gamma, vega, rho;
+
+            if (isNaN(BlackScholes('p',x, K, T, q, r, v)) === true) {
+                y = 0;
+            }   else{
+                y = BlackScholes('p',x, K, T, q, r, v);
+            }
+
+            if (isNaN(Delta('p',x, K, T, q, r, v)) === true) {
+                delta = 0;
+            }   else{
+                delta = Delta('p',x, K, T, q, r, v);
+            }
+
+            if (isNaN(Gamma(x, K, T, q, r, v)) === true) {
+                gamma = 0;
+            }   else{
+                gamma = Gamma(x, K, T, q, r, v);
+            }
+
+            if (isNaN(Vega(x, K, T, q, r, v)) === true) {
+                vega = 0;
+            }   else{
+                vega = Vega(x, K, T, q, r, v);
+            }
+
+            if (isNaN(Rho('p',x, K, T, q, r, v)) === true) {
+                rho = 0;
+            }   else{
+                rho = Rho('p',x, K, T, q, r, v);
+            }
+
+            var data = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'rho': rho};
+            pullLineData.push(data);
+
+        }
+
+        return pullLineData;
+    }
 
     function plotAxes (){
 
@@ -309,10 +359,11 @@
                 .x(function(d){ return xScale(d.x); })
                 .y(function(d){ return yScale1(d.y); }),
 
-            areaDelta = d3.svg.area()
+            lineDelta = d3.svg.line()
                 .x(function(d){ return xScale(d.x); })
-                .y0(yScale2(0))
-                .y1(function(d){ return yScale2(d.delta); }),
+                .y(function(d){ return yScale2(d.delta); }),
+                /*.y0(yScale2(0))
+                .y1(function(d){ return yScale2(d.delta); }),*/
 
             lineGamma = d3.svg.line()
                 .x(function(d){ return xScale(d.x); })
@@ -339,9 +390,11 @@
 
         svg.append('path')
             .datum(callLineData)
-            .attr('class', 'bluearea')
-            .attr('d', areaDelta)
-            .attr('fill', 'steelblue');
+            .attr('class', 'blueline')
+            .attr('d', lineDelta)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr('stroke-width', 3);
 
         svg.append('path')
             .datum(callLineData)
@@ -373,31 +426,60 @@
 
         svg.selectAll('circle').remove();
         svg.selectAll('line').remove();
-        svg.selectAll('rect').remove();
+        //svg.selectAll('rect').remove();
 
         var Stock = $('#sliderStock').slider('value');
+        var Strike = $('#sliderStrike').slider('value');
 
-        var circlePremium = svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale1(callPremium));
+        if ($('#displaySpot')[0].checked === true){
 
-        circlePremium
-            .transition(1000).delay(300)
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale1(callPremium));
+            var circlePremium = svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale1(callPremium));
 
-        var rectDelta = svg.append('rect')
-            .attr('class', 'barRed')
-            .attr('x', xScale(Stock))
-            .attr('height', (380 - yScale2(callDelta)))
-            .attr('width', 2)
-            .attr('y', yScale2(callDelta));
+            var circleDelta = svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale2(callDelta));
 
-        rectDelta
-            .transition(1000).delay(300);
+            var circleGamma = svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale3(spotGamma));
+
+            var circleVega = svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale4(spotVega));
+
+            var circleRho = svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale5(callRho));
+
+            var tangent = svg.append('line')
+                .attr('class','lineRed')
+                .attr('x1', xScale(Stock - 40))
+                .attr('y1', yScale1(callDelta * (- 40) + callPremium))
+                .attr('x2', xScale(Stock + 40))
+                .attr('y2', yScale1(callDelta * (40) + callPremium));
+        }
+
+        if ($('#displayStrike')[0].checked === true){
+
+            var lineStrike = svg.append('line')
+                .attr('class', 'lineStrike')
+                .attr('x1', xScale(Strike))
+                .attr('y1', yScale1(0))
+                .attr('x2', xScale(Strike * 2))
+                .attr('y2', yScale1(Strike));
+        }
 
         if ($('#displayForward')[0].checked === true){
 
@@ -406,59 +488,8 @@
                 .attr('x1', xScale(spotForward))
                 .attr('y1', 40)
                 .attr('x2', xScale(spotForward))
-                .attr('y2', 560);
+                .attr('y2', 925);
         }
-
-        var circleGamma = svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale3(spotGamma));
-
-        circleGamma
-            .transition(1000).delay(300)
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale3(spotGamma));
-
-        var circleVega = svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale4(spotVega));
-
-        circleVega
-            .transition(1000).delay(300)
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale4(spotVega));
-
-        var circleRho = svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale5(callRho));
-
-        circleRho
-            .transition(1000).delay(300)
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale5(callRho));
-
-        var tangent = svg.append('line')
-            .attr('class','lineRed')
-            .attr('x1', xScale(Stock) - 60)
-            .attr('y1', yScale1(callPremium) + 50 * callDelta )
-            .attr('x2', xScale(Stock) + 60)
-            .attr('y2', yScale1(callPremium) - 50 * callDelta );
-
-        /*tangent
-            .transition(1000).delay(300)
-            .attr('x1', xScale(Stock) - 50)
-            .attr('y1', yScale1(callPremium)  + 50 * callDelta )
-            .attr('x2', xScale(Stock) + 50)
-            .attr('y2', yScale1(callPremium) - 50 * callDelta);*/
-
     }
 
     var callPremium, putPremium, callDelta, putDelta, callRho, putRho, spotForward, spotGamma, spotVega;
@@ -519,8 +550,8 @@
 
         xScale.domain([0, 2 * Strike]);
         yScale1.domain([Strike, 0]);
-        yScale2.domain([2, 0]);
-        yScale3.domain([0.1, 0]);
+        yScale2.domain([1, 0]);
+        yScale3.domain([0.06, 0]);
         yScale4.domain([130, 0]);
         yScale5.domain([400, 0]);
 
@@ -938,8 +969,16 @@
 
         $('.ui-slider-handle').css('border-color', '#00297B');
 
+        $('#displaySpot').prop('checked', true)
+            .val($(this).is(':checked'))
+            .change(function(){plotExtra();});
+
         $('#displayForward').val($(this).is(':checked'))
                 .change(function(){plotExtra();});
+
+        $('#displayStrike').prop('checked', true)
+            .val($(this).is(':checked'))
+            .change(function(){plotExtra();});
 
         $('#playerForward').css('display', 'none');
         $('#playerVolatility').css('display', 'none');

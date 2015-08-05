@@ -95,11 +95,6 @@
     fill:#BB362F;
 }
 
-.barRed{
-    fill:#BB362F;
-    width: 3px;
-}
-
 .lineRed{
     stroke: #BB362F;
     stroke-width: 2px;
@@ -107,5 +102,10 @@
 
 .lineForward{
     stroke: SeaGreen;
+    stroke-width: 1px;
+}
+
+.lineStrike{
+    stroke: gray;
     stroke-width: 1px;
 }
