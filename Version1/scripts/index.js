@@ -447,17 +447,17 @@
 
         var tangent = svg.append('line')
             .attr('class','lineRed')
-            .attr('x1', xScale(Stock) - 50)
-            .attr('y1', yScale1(callPremium) + 50 * callDelta)
-            .attr('x2', xScale(Stock) + 50)
-            .attr('y2', yScale1(callPremium) - 50 * callDelta);
+            .attr('x1', xScale(Stock) - 60)
+            .attr('y1', yScale1(callPremium) + 50 * callDelta )
+            .attr('x2', xScale(Stock) + 60)
+            .attr('y2', yScale1(callPremium) - 50 * callDelta );
 
-        tangent
+        /*tangent
             .transition(1000).delay(300)
             .attr('x1', xScale(Stock) - 50)
             .attr('y1', yScale1(callPremium)  + 50 * callDelta )
             .attr('x2', xScale(Stock) + 50)
-            .attr('y2', yScale1(callPremium) - 50 * callDelta);
+            .attr('y2', yScale1(callPremium) - 50 * callDelta);*/
 
     }
 
