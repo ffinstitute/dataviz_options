@@ -6,29 +6,29 @@
 .playa input[type=range] {
     -webkit-appearance:none;
     -moz-apperance:none;
-    background-color:#ddd;
+    background-color:#fff;
     border: 1px solid #bbb;
     height:.5em;
-    border-radius:.5em;
     width:100%;
-    margin:-2px;
+    margin:0;
+    margin-top: 6px;
     padding:0 !important;
     line-height:0;
 }
-.playa input[type=range] .-webkit-slider-thumb {
+/*.playa input[type=range] .-webkit-slider-thumb {
     -webkit-appearance:none;
     -moz-apperance:none;
     z-index:3;
     height:1em;
     width:1em;
     border-radius:1em;
-    border:1px solid #aaa;
+    border:1px solid #bbb;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fefefe), color-stop(0.49, #dddddd), color-stop(0.51, #d1d1d1), color-stop(1, #a1a1a1));
 }
 
-.playa {
-    /*margin:0;*/
-}
+/*.playa {
+    /*margin:0;
+}*/
 
 .playa  .thumbnail  {
     width:96%;
@@ -39,38 +39,45 @@
     text-align:center;
 }
 
-@media (max-width: 979px) and (min-width: 768px){
+/*@media (max-width: 500px) and (min-width: 500px){
     .span4 .playa, .playa.span4{
         padding:0;
     }
-}
-@media (min-width: 768px){
+}*/
+@media (min-width: 500px){
     .playa .btn-group .btn {
-        padding:4px 3px;
-        margin:auto;
-        display:inline-block;
+        padding: 4px 3px;
+        margin: auto;
+        border: 1px solid #bbb;
+        background-color:#fff;
+        display: inline-block;
         float:none;
+        height: 30px;
     }
     .playa .btn-group .span1 {
-        width:8%;
+        width:20%;
     }
-    .playa .btn-group .span2 {
+    /*.playa .btn-group .span2 {
         width:16%;
     }
-    .playa .btn-group .span3 {
+    /*.playa .btn-group .span3 {
         width:25%;
-    }
+    }*/
     .playa .btn-group .span4{
-        width:33%;
+        width:50%;
     }
     .playa.span2 .btn-group .btn, .playa.span1 .btn-group .btn, .span2 .playa .btn-group .btn, .span1 .playa .btn-group .btn{
         width:100%;
         display:block;
     }
-    .span4.playa, .span3 .playa, .span2 .playa, .span1 .playa, .playa.span4, .playa.span3, .playa.span2, .playa.span1{
+    /*.span4.playa, .span3 .playa, .span2 .playa, .span1 .playa, .playa.span4, .playa.span3, .playa.span2, .playa.span1{
         padding:0;
         overflow:hidden;
-    }
+    }*/
+}
+
+#allGraphs{
+ font: 10px sans-serif;
 }
 
 .picture{
