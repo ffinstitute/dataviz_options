@@ -105,9 +105,9 @@
                             <thead>
 
                                 <th></th>
-                                <th class="Put-Call" style="text-align: right">(!)</th>
-                                <th class="Put-Call" style="text-align: right">Call</th>
-                                <th class="Put-Call" style="text-align: right">Put</th>
+                                <th></th>
+                                <th style="text-align: right"><a id="btnCall" class="on" type="button">Call</a></th>
+                                <th style="text-align: right"><a id="btnPut" class="off" type="button">Put</a></th>
 
                             </thead>
 
@@ -211,7 +211,7 @@
                                     <p><a id="audioForward" class="btn btn-primary" style="display: block">
                                         Listen <span class="glyphicon glyphicon-headphones"></span>
                                     </a></p>
-                                    <div id="playerForward">
+                                    <div id="playerForward" style="display: none">
                                         <audio controls>
                                             <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
                                         </audio>
@@ -230,7 +230,7 @@
                                     <p><a id="audioVolatility" class="btn btn-primary" style="display: block">
                                         Listen <span class="glyphicon glyphicon-headphones"></span>
                                     </a></p>
-                                    <div id="playerVolatility">
+                                    <div id="playerVolatility" style="display: none">
                                         <audio controls>
                                             <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
                                         </audio>
@@ -252,7 +252,7 @@
                                     <p><a id="audioRates" class="btn btn-primary" style="display: block">
                                         Listen <span class="glyphicon glyphicon-headphones"></span>
                                     </a></p>
-                                    <div id="playerRates">
+                                    <div id="playerRates" style="display: none">
                                         <audio controls>
                                             <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
                                         </audio>
@@ -270,7 +270,7 @@
                                     <p><a id="audioTime" class="btn btn-primary" style="display: block">
                                         Listen <span class="glyphicon glyphicon-headphones"></span>
                                     </a></p>
-                                    <div id="playerTime">
+                                    <div id="playerTime" style="display: none">
                                         <audio controls>
                                             <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
                                         </audio>
@@ -294,12 +294,12 @@
             <div class="panel-heading">
 
                 <div class="row pull-right">
-                            <span class=""><label style="font-weight: normal"><input id="displaySpot" type="checkbox" value="checked"> Spot</label></span>
-                            <span><label style="font-weight: normal"><input id="displayForward" type="checkbox" value=""> Forward</label></span>
-                            <span><label style="font-weight: normal"><input id="displayStrike" type="checkbox" value=""> Strike</label></span>
+                            <span class="displayInput"><label style="font-weight: normal"><input id="displaySpot" type="checkbox" checked> Spot</label></span>
+                            <span class="displayInput"><label style="font-weight: normal"><input id="displayForward" type="checkbox" value=""> Forward</label></span>
+                            <span class="displayInput"><label style="font-weight: normal"><input id="displayStrike" type="checkbox" checked> Strike</label></span>
                 </div>
 
-                <h3 class="panel-title">Graphs</h3>
+                <h3 class="panel-title">Graphs <span>(Call)</span></h3>
 
             </div>
 

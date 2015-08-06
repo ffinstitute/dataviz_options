@@ -120,6 +120,8 @@
 
     function plotTitles (){
 
+        svg.selectAll('text').remove();
+
         svg.append('text')
             .text('Pay-out and Option Value')
             .attr('x', width/4)
@@ -255,8 +257,8 @@
                 rho = Rho('p',x, K, T, q, r, v);
             }
 
-            var data = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'rho': rho};
-            pullLineData.push(data);
+            var data2 = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'rho': rho};
+            pullLineData.push(data2);
 
         }
 
@@ -380,21 +382,56 @@
         d3.selectAll('path.blueline').remove();
         d3.selectAll('path.bluearea').remove();
 
-        svg.append('path')
-            .datum(callLineData)
-            .attr('class', 'blueline')
-            .attr('d', linePremium)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 3);
+        if($('#btnCall').hasClass('on')){
+            svg.append('path')
+                .datum(callLineData)
+                .attr('class', 'blueline')
+                .attr('d', linePremium)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
 
-        svg.append('path')
-            .datum(callLineData)
-            .attr('class', 'blueline')
-            .attr('d', lineDelta)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 3);
+            svg.append('path')
+                .datum(callLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineDelta)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+            svg.append('path')
+                .datum(callLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineRho)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+        }   else{
+            svg.append('path')
+                .datum(pullLineData)
+                .attr('class', 'blueline')
+                .attr('d', linePremium)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+            svg.append('path')
+                .datum(pullLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineDelta)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+            svg.append('path')
+                .datum(pullLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineRho)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+        }
 
         svg.append('path')
             .datum(callLineData)
@@ -412,83 +449,113 @@
             .attr('stroke', 'steelblue')
             .attr('stroke-width', 3);
 
-        svg.append('path')
-            .datum(callLineData)
-            .attr('class', 'blueline')
-            .attr('d', lineRho)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 3);
-
     }
 
     function plotExtra(){
 
         svg.selectAll('circle').remove();
         svg.selectAll('line').remove();
-        //svg.selectAll('rect').remove();
 
         var Stock = $('#sliderStock').slider('value');
         var Strike = $('#sliderStrike').slider('value');
 
         if ($('#displaySpot')[0].checked === true){
 
-            var circlePremium = svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', xScale(Stock))
-                .attr('cy', yScale1(callPremium));
-
-            var circleDelta = svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', xScale(Stock))
-                .attr('cy', yScale2(callDelta));
-
-            var circleGamma = svg.append('circle')
+            svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
                 .attr('cx', xScale(Stock))
                 .attr('cy', yScale3(spotGamma));
 
-            var circleVega = svg.append('circle')
+            svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
                 .attr('cx', xScale(Stock))
                 .attr('cy', yScale4(spotVega));
 
-            var circleRho = svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', xScale(Stock))
-                .attr('cy', yScale5(callRho));
+            if($('#btnCall').hasClass('on')){
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale1(callPremium));
 
-            var tangent = svg.append('line')
-                .attr('class','lineRed')
-                .attr('x1', xScale(Stock - 40))
-                .attr('y1', yScale1(callDelta * (- 40) + callPremium))
-                .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(callDelta * (40) + callPremium));
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale2(callDelta));
+
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale5(callRho));
+
+                svg.append('line')
+                    .attr('class','lineRed')
+                    .attr('x1', xScale(Stock - 40))
+                    .attr('y1', yScale1(callDelta * (- 40) + callPremium))
+                    .attr('x2', xScale(Stock + 40))
+                    .attr('y2', yScale1(callDelta * (40) + callPremium));
+
+            }   else{
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale1(putPremium));
+
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale2(putDelta));
+
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale5(putRho));
+
+                svg.append('line')
+                    .attr('class','lineRed')
+                    .attr('x1', xScale(Stock - 40))
+                    .attr('y1', yScale1(putDelta * (- 40) + putPremium))
+                    .attr('x2', xScale(Stock + 40))
+                    .attr('y2', yScale1(putDelta * (40) + putPremium));
+            }
+
         }
 
         if ($('#displayStrike')[0].checked === true){
 
-            var lineStrike = svg.append('line')
-                .attr('class', 'lineStrike')
-                .attr('x1', xScale(Strike))
-                .attr('y1', yScale1(0))
-                .attr('x2', xScale(Strike * 2))
-                .attr('y2', yScale1(Strike));
+            if($('#btnCall').hasClass('on')){
+                svg.append('line')
+                    .attr('class', 'lineStrike')
+                    .attr('x1', xScale(Strike))
+                    .attr('y1', yScale1(0))
+                    .attr('x2', xScale(Strike * 2))
+                    .attr('y2', yScale1(Strike));
+            }   else{
+                svg.append('line')
+                    .attr('class', 'lineStrike')
+                    .attr('x1', xScale(Strike))
+                    .attr('y1', yScale1(0))
+                    .attr('x2', xScale(0))
+                    .attr('y2', yScale1(Strike));
+            }
         }
 
         if ($('#displayForward')[0].checked === true){
 
-            var lineForward = svg.append('line')
+            svg.append('line')
                 .attr('class', 'lineForward')
                 .attr('x1', xScale(spotForward))
                 .attr('y1', 40)
                 .attr('x2', xScale(spotForward))
-                .attr('y2', 925);
+                .attr('y2', 925)
+                .style('stroke-dasharray', ('5, 5'));
         }
     }
 
@@ -550,19 +617,25 @@
 
         xScale.domain([0, 2 * Strike]);
         yScale1.domain([Strike, 0]);
-        yScale2.domain([1, 0]);
         yScale3.domain([0.06, 0]);
         yScale4.domain([130, 0]);
-        yScale5.domain([400, 0]);
+
+        if($('#btnCall').hasClass('on')){
+            yScale2.domain([1, 0]);
+            yScale5.domain([400, 0]);
+        }   else{
+            yScale2.domain([-1, 0]);
+            yScale5.domain([-400, 0]);
+        }
 
         callCurve(Strike, Mat, Q, R, Vol);
+        putCurve(Strike, Mat, Q, R, Vol);
 
         plotAxes();
 
         plotGraphs();
 
         plotExtra();
-
     }
 
     function audio() {
@@ -969,21 +1042,14 @@
 
         $('.ui-slider-handle').css('border-color', '#00297B');
 
-        $('#displaySpot').prop('checked', true)
-            .val($(this).is(':checked'))
+        $('#displaySpot').val($(this).is(':checked'))
             .change(function(){plotExtra();});
 
         $('#displayForward').val($(this).is(':checked'))
                 .change(function(){plotExtra();});
 
-        $('#displayStrike').prop('checked', true)
-            .val($(this).is(':checked'))
+        $('#displayStrike').val($(this).is(':checked'))
             .change(function(){plotExtra();});
-
-        $('#playerForward').css('display', 'none');
-        $('#playerVolatility').css('display', 'none');
-        $('#playerRates').css('display', 'none');
-        $('#playerTime').css('display', 'none');
 
         $('#audioForward').click(function(){
             $('#audioForward').hide('slideLeft');
@@ -1012,6 +1078,20 @@
         $('.carousel').carousel({
             interval: 6000,
             pause: 'hover'
+        });
+
+        $('#btnCall').click(function(){
+            $('#btnPut').switchClass('on','off');
+            $('#btnCall').switchClass('off','on');
+            $('#divGraphs h3 span').html('(Call)');
+            update();
+        });
+
+        $('#btnPut').click(function(){
+            $('#btnCall').switchClass('on','off');
+            $('#btnPut').switchClass('off','on');
+            $('#divGraphs h3 span').html('(Put)');
+            update();
         });
 
         plotTitles();

@@ -1,6 +1,50 @@
-.Put-Call{
+.on{
     color: #BB362F;
     font-size: 18px;
+}
+
+.off{
+    color: #555555;
+    font-size: 18px;
+}
+
+#allGraphs{
+    font: 10px sans-serif;
+}
+
+.picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#FFICarousel{
+    background-color: darkslategray;
+}
+
+
+.circleRed  {
+    fill:#BB362F;
+}
+
+.lineRed{
+    stroke: #BB362F;
+    stroke-width: 2px;
+}
+
+.lineForward{
+    stroke: SeaGreen;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.lineStrike{
+    stroke: gray;
+    stroke-width: 1px;
+}
+
+.displayInput{
+    margin-right: 10px;
 }
 
 .playa input[type=range] {
@@ -76,36 +120,3 @@
     }*/
 }
 
-#allGraphs{
- font: 10px sans-serif;
-}
-
-.picture{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#FFICarousel{
-    background-color: darkslategray;
-}
-
-
-.circleRed  {
-    fill:#BB362F;
-}
-
-.lineRed{
-    stroke: #BB362F;
-    stroke-width: 2px;
-}
-
-.lineForward{
-    stroke: SeaGreen;
-    stroke-width: 1px;
-}
-
-.lineStrike{
-    stroke: gray;
-    stroke-width: 1px;
-}
