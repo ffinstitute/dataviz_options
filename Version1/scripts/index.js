@@ -1007,7 +1007,8 @@
             step: 0.005,
             value: 0.0,
             slide: function( event, ui ) {
-                $('#Dividend span').html(Math.round(ui.value * 10000) / 100);
+                $('#Dividend span').html(Math.round(ui.value * 10000) / 100)
+                    ;
             },
             change:function(){update();}
         });
@@ -1081,14 +1082,14 @@
         });
 
         $('#btnCall').click(function(){
-            $('#btnPut').switchClass('on','off');
+            $('#btnPut').removeClass('on').addClass('off');
             $('#btnCall').switchClass('off','on');
             $('#divGraphs h3 span').html('(Call)');
             update();
         });
 
         $('#btnPut').click(function(){
-            $('#btnCall').switchClass('on','off');
+            $('#btnCall').removeClass('on').addClass('off');
             $('#btnPut').switchClass('off','on');
             $('#divGraphs h3 span').html('(Put)');
             update();
