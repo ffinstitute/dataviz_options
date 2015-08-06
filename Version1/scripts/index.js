@@ -474,6 +474,14 @@
                 .attr('cy', yScale4(spotVega));
 
             if($('#btnCall').hasClass('on')){
+
+                svg.append('line')
+                    .attr('class', 'lineRef')
+                    .attr('x1', xScale(Strike))
+                    .attr('y1', yScale1(0))
+                    .attr('x2', xScale(Strike * 2))
+                    .attr('y2', yScale1(Strike));
+
                 svg.append('circle')
                     .attr('class', 'circleRed')
                     .attr('r', 4)
@@ -500,6 +508,14 @@
                     .attr('y2', yScale1(callDelta * (40) + callPremium));
 
             }   else{
+
+                svg.append('line')
+                    .attr('class', 'lineRef')
+                    .attr('x1', xScale(Strike))
+                    .attr('y1', yScale1(0))
+                    .attr('x2', xScale(0))
+                    .attr('y2', yScale1(Strike));
+
                 svg.append('circle')
                     .attr('class', 'circleRed')
                     .attr('r', 4)
@@ -530,21 +546,14 @@
 
         if ($('#displayStrike')[0].checked === true){
 
-            if($('#btnCall').hasClass('on')){
                 svg.append('line')
                     .attr('class', 'lineStrike')
                     .attr('x1', xScale(Strike))
-                    .attr('y1', yScale1(0))
-                    .attr('x2', xScale(Strike * 2))
-                    .attr('y2', yScale1(Strike));
-            }   else{
-                svg.append('line')
-                    .attr('class', 'lineStrike')
-                    .attr('x1', xScale(Strike))
-                    .attr('y1', yScale1(0))
-                    .attr('x2', xScale(0))
-                    .attr('y2', yScale1(Strike));
-            }
+                    .attr('y1', 40)
+                    .attr('x2', xScale(Strike))
+                    .attr('y2', 925)
+                    //.style('stroke-dasharray', ('5, 5'));
+
         }
 
         if ($('#displayForward')[0].checked === true){
@@ -592,8 +601,8 @@
 
         $('#Stock span').html(Stock);
         $('#Strike span').html(Strike);
-        $('#Risk span').html(1000 * R / 10);
-        $('#Dividend span').html(1000 * Q / 10);
+        $('#Risk span').html((1000 * R / 10).toPrecision(2));
+        $('#Dividend span').html((1000 * Q / 10).toPrecision(2));
         $('#Maturity span').html(Mat);
         $('#Volatility span').html(1000 * Vol / 10);
 
@@ -995,7 +1004,7 @@
             step: 0.005,
             value: 0.0,
             slide: function( event, ui ) {
-                $('#Risk span').html(Math.round(ui.value * 10000) / 100);
+                $('#Risk span').html((Math.round(ui.value * 10000) / 100).toPrecision(2));
             },
             change:function(){update();}
         });
@@ -1007,8 +1016,7 @@
             step: 0.005,
             value: 0.0,
             slide: function( event, ui ) {
-                $('#Dividend span').html(Math.round(ui.value * 10000) / 100)
-                    ;
+                $('#Dividend span').html((Math.round(ui.value * 10000) / 100).toPrecision(2));
             },
             change:function(){update();}
         });

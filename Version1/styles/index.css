@@ -22,6 +22,10 @@
     background-color: darkslategray;
 }
 
+.lineRef{
+    stroke: gray;
+    stroke-width: 1px;
+}
 
 .circleRed  {
     fill:#BB362F;
@@ -39,8 +43,10 @@
 }
 
 .lineStrike{
-    stroke: gray;
+    stroke: darkslategray;
     stroke-width: 1px;
+    shape-rendering: crispEdges;
+    opacity: 0.3;
 }
 
 .displayInput{
