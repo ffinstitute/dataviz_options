@@ -976,8 +976,8 @@
 
         $('#Stock span').html(100);
         $('#Strike span').html(100);
-        $('#Risk span').html(0.0);
-        $('#Dividend span').html(0.0);
+        $('#Risk span').html((0.0).toPrecision(2));
+        $('#Dividend span').html((0.0).toPrecision(2));
         $('#Maturity span').html(2.5);
         $('#Volatility span').html(40);
     }
