@@ -475,13 +475,6 @@
 
             if($('#btnCall').hasClass('on')){
 
-                svg.append('line')
-                    .attr('class', 'lineRef')
-                    .attr('x1', xScale(Strike))
-                    .attr('y1', yScale1(0))
-                    .attr('x2', xScale(Strike * 2))
-                    .attr('y2', yScale1(Strike));
-
                 svg.append('circle')
                     .attr('class', 'circleRed')
                     .attr('r', 4)
@@ -508,13 +501,6 @@
                     .attr('y2', yScale1(callDelta * (40) + callPremium));
 
             }   else{
-
-                svg.append('line')
-                    .attr('class', 'lineRef')
-                    .attr('x1', xScale(Strike))
-                    .attr('y1', yScale1(0))
-                    .attr('x2', xScale(0))
-                    .attr('y2', yScale1(Strike));
 
                 svg.append('circle')
                     .attr('class', 'circleRed')
@@ -551,7 +537,7 @@
                     .attr('x1', xScale(Strike))
                     .attr('y1', 40)
                     .attr('x2', xScale(Strike))
-                    .attr('y2', 925)
+                    .attr('y2', 925);
                     //.style('stroke-dasharray', ('5, 5'));
 
         }
@@ -566,6 +552,24 @@
                 .attr('y2', 925)
                 .style('stroke-dasharray', ('5, 5'));
         }
+
+        if($('#btnCall').hasClass('on')){
+            svg.append('line')
+                .attr('class', 'lineRef')
+                .attr('x1', xScale(Strike))
+                .attr('y1', yScale1(0))
+                .attr('x2', xScale(Strike * 2))
+                .attr('y2', yScale1(Strike));
+        }   else{
+            svg.append('line')
+                .attr('class', 'lineRef')
+                .attr('x1', xScale(Strike))
+                .attr('y1', yScale1(0))
+                .attr('x2', xScale(0))
+                .attr('y2', yScale1(Strike));
+        }
+
+
     }
 
     var callPremium, putPremium, callDelta, putDelta, callRho, putRho, spotForward, spotGamma, spotVega;
@@ -599,12 +603,12 @@
 
         putRho = Rho('p', Stock, Strike, Mat, Q, R, Vol);
 
-        $('#Stock span').html(Stock);
+        /*$('#Stock span').html(Stock);
         $('#Strike span').html(Strike);
         $('#Risk span').html((1000 * R / 10).toPrecision(2));
         $('#Dividend span').html((1000 * Q / 10).toPrecision(2));
         $('#Maturity span').html(Mat);
-        $('#Volatility span').html(1000 * Vol / 10);
+        $('#Volatility span').html(1000 * Vol / 10);*/
 
         $('#Drift span').html(Math.round(10000 * Drift)/100);
         $('#Forward span').html(Math.round(100 * spotForward)/100);
@@ -969,6 +973,13 @@
         $('#sliderDividend').slider('value', 0.0 );
         $('#sliderMaturity').slider('value', 2.5 );
         $('#sliderVolatility').slider('value', 0.4 );
+
+        $('#Stock span').html(100);
+        $('#Strike span').html(100);
+        $('#Risk span').html(0.0);
+        $('#Dividend span').html(0.0);
+        $('#Maturity span').html(2.5);
+        $('#Volatility span').html(40);
     }
 
     $(document).ready(function(){
@@ -1004,7 +1015,10 @@
             step: 0.005,
             value: 0.0,
             slide: function( event, ui ) {
-                $('#Risk span').html((Math.round(ui.value * 10000) / 100).toPrecision(2));
+                var n = Math.round(ui.value * 10000) / 100;
+                if(n >= 0 && (n + '').length === 1){n+='.0';}
+                if(n < 0 && (n + '').length === 2){n+='.0';}
+                $('#Risk span').html(n);
             },
             change:function(){update();}
         });
@@ -1016,7 +1030,10 @@
             step: 0.005,
             value: 0.0,
             slide: function( event, ui ) {
-                $('#Dividend span').html((Math.round(ui.value * 10000) / 100).toPrecision(2));
+                var n = Math.round(ui.value * 10000) / 100;
+                if(n >= 0 && (n + '').length === 1){n+='.0';}
+                if(n < 0 && (n + '').length === 2){n+='.0';}
+                $('#Dividend span').html(n);
             },
             change:function(){update();}
         });
@@ -1028,7 +1045,9 @@
             step: 0.1,
             value: 2.5,
             slide: function( event, ui ) {
-                    $('#Maturity span').html(ui.value);
+                var n = ui.value;
+                if((n + '').length === 1){n+='.0';}
+                $('#Maturity span').html(n);
             },
             change: function(){update();}
         });
