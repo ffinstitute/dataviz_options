@@ -297,21 +297,18 @@
 
             <div class="panel-heading">
 
-                <div class="row pull-right" data-align="center" style="">
+                <div class="row pull-right" style="margin-top: -6px">
                             <span class="displayInput"><label style="font-weight: normal"><input id="displaySpot" type="checkbox" checked> Spot</label></span>
                             <span class="displayInput"><label style="font-weight: normal"><input id="displayForward" type="checkbox"> Forward</label></span>
                             <span class="displayInput"><label style="font-weight: normal"><input id="displayStrike" type="checkbox"> Strike</label></span>
-                    <!--div class="btn-group displayInput" data-toggle="buttons" style="">
-                        <label class="btn btn-sm btn-primary">
-                            <input type="radio" id="btnCall1" name="btnCallPut" checked="checked"/> Call
+                    <div class="btn-group displayInput">
+                            <button type="button" id="btnCall1" class="btn btn-sm btn-primary active"> Call</button>
+                            <button type="button" id="btnPut1" class="btn btn-sm btn-primary"> Put</button>
                         </label>
-                        <label class="btn btn-sm btn-primary">
-                            <input type="radio" id="btnPut1" name="btnCallPut"/> Put
-                        </label>
-                    </div-->
+                    </div>
                 </div>
 
-                <h3 class="panel-title">Graphs</h3>
+                <h3 class="panel-title">Graphs <span>(Call)</span></h3>
 
             </div>
 
@@ -322,7 +319,7 @@
         </div>
 
         <div name="divLogo">
-            <img src="./styles/images/LOGO_FFI_CMJN.jpg" alt="FFI Logo" width="300px">
+            <img src="./styles/images/LOGO_FFI_CMJN.jpg" alt="FFI Logo" width="320px">
         </div>
 
         <!--div name="divFFI" class="panel panel-primary" style="height: 270px">

@@ -201,7 +201,7 @@
         svg.append('text')
             .text('Theta')
             .attr('x', width/4)
-            .attr('y', 920)
+            .attr('y', 930)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill','gray');
@@ -1268,17 +1268,21 @@
             pause: 'hover'
         });
 
-        $('#btnCall').click(function(){
+        $('#btnCall, #btnCall1').click(function(){
             $('#btnPut').removeClass('on').addClass('off');
-            $('#btnCall').switchClass('off','on');
-            //$('#divGraphs h3 span').html('(Call)');
+            $('#btnCall').removeClass('off').addClass('on');
+            $('#btnPut1').removeClass('active');
+            $('#btnCall1').addClass('active');
+            $('#divGraphs h3 span').html('(Call)');
             update();
         });
 
-        $('#btnPut').click(function(){
+        $('#btnPut, #btnPut1').click(function(){
             $('#btnCall').removeClass('on').addClass('off');
-            $('#btnPut').switchClass('off','on');
-            //$('#divGraphs h3 span').html('(Put)');
+            $('#btnPut').removeClass('off').addClass('on');
+            $('#btnCall1').removeClass('active');
+            $('#btnPut1').addClass('active');
+            $('#divGraphs h3 span').html('(Put)');
             update();
         });
 
