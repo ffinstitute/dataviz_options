@@ -100,6 +100,15 @@
 
                     <div>
 
+                        <table class="table">
+                        <tr>
+                            <td style="font-weight: bold">Drift</td>
+                            <td id="Drift" style="text-align: right"><span></span>%</td>
+                            <td style="font-weight: bold; text-align: right">Forward</td>
+                            <td id="Forward" style="text-align: right"><span></span> $</td>
+                        </tr>
+                        </table>
+
                         <table class="table table-hover table-condensed">
 
                             <thead>
@@ -112,20 +121,6 @@
                             </thead>
 
                             <tbody>
-
-                                <tr>
-                                    <td style="font-weight: bold">Drift</td>
-                                    <td id="Drift" style="text-align: right"><span></span>%</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td style="font-weight: bold">Forward</td>
-                                    <td id="Forward" style="text-align: right"><span></span> $</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
 
                                 <tr>
 
@@ -156,18 +151,27 @@
                                 <tr>
 
                                     <td style="font-weight: bold">Gamma</td>
-                                    <td id="Gamma" style="text-align: right"><span></span></td>
                                     <td></td>
-                                    <td></td>
+                                    <td class="Gamma" style="text-align: right"><span></span></td>
+                                    <td class="Gamma" style="text-align: right"><span></span></td>
 
                                 </tr>
 
                                 <tr>
 
                                     <td style="font-weight: bold">Vega</td>
-                                    <td id="Vega" style="text-align: right"><span></span></td>
                                     <td></td>
+                                    <td class="Vega" style="text-align: right"><span></span></td>
+                                    <td class="Vega" style="text-align: right"><span></span></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-weight: bold">Theta</td>
                                     <td></td>
+                                    <td id="callTheta" style="text-align: right"><span></span></td>
+                                    <td id="putTheta" style="text-align: right"><span></span></td>
 
                                 </tr>
 
@@ -293,13 +297,21 @@
 
             <div class="panel-heading">
 
-                <div class="row pull-right">
+                <div class="row pull-right" data-align="center" style="">
                             <span class="displayInput"><label style="font-weight: normal"><input id="displaySpot" type="checkbox" checked> Spot</label></span>
                             <span class="displayInput"><label style="font-weight: normal"><input id="displayForward" type="checkbox"> Forward</label></span>
                             <span class="displayInput"><label style="font-weight: normal"><input id="displayStrike" type="checkbox"> Strike</label></span>
+                    <!--div class="btn-group displayInput" data-toggle="buttons" style="">
+                        <label class="btn btn-sm btn-primary">
+                            <input type="radio" id="btnCall1" name="btnCallPut" checked="checked"/> Call
+                        </label>
+                        <label class="btn btn-sm btn-primary">
+                            <input type="radio" id="btnPut1" name="btnCallPut"/> Put
+                        </label>
+                    </div-->
                 </div>
 
-                <h3 class="panel-title">Graphs <span>(Call)</span></h3>
+                <h3 class="panel-title">Graphs</h3>
 
             </div>
 
@@ -309,7 +321,11 @@
 
         </div>
 
-        <div name="divFFI" class="panel panel-primary" style="height: 270px">
+        <div name="divLogo">
+            <img src="./styles/images/LOGO_FFI_CMJN.jpg" alt="FFI Logo" width="300px">
+        </div>
+
+        <!--div name="divFFI" class="panel panel-primary" style="height: 270px">
 
             <div class="panel-heading">
                 <h3 class="panel-title">About us</h3>
@@ -354,13 +370,14 @@
 
             </div>
 
-        </div>
+        </div-->
 
     </div>
 
 </div>
 
-<!--script src="./scripts/formulesV1.js"></script-->
+
+
 <script src="./scripts/index.js"></script>
 
 </body>

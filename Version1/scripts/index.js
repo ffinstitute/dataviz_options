@@ -86,6 +86,20 @@
 
     }
 
+    function Theta(PutCallFlag, S, K, T, q, r, v){
+        var d1, d2;
+
+        d1 = (Math.log(S / K) + (r - q + v * v / 2.0) * T) / (v * Math.sqrt(T));
+        d2 = d1 - v * Math.sqrt(T);
+
+        if (PutCallFlag === 'c'){
+            return -Math.exp(-q * T) * S * SND(d1) * v / (2 * Math.sqrt(T)) - r * K * Math.exp(-r * T) * CND(d2) + q * S * Math.exp(-q * T) * CND(d1);
+        }
+        else{
+            return -Math.exp(-q * T) * S * SND(d1) * v / (2 * Math.sqrt(T)) + r * K * Math.exp(-r * T) * CND(-d2) - q * S * Math.exp(-q * T) * CND(-d1);
+        }
+    }
+
     function Rho(PutCallFlag, S, K, T, q, r, v){
 
         var d1, d2;
@@ -102,21 +116,23 @@
 
     }
 
-    var width = $('#divGraphs .panel-body').width(),
-        height = 950;
+        var width = $('#divGraphs .panel-body').width(),
+            height = 1130;
 
-    var svg = d3.select('#allGraphs')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
+        var svg = d3.select('#allGraphs')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
 
-    var xScale = d3.scale.linear().range([40, width-40]);
+        var xScale = d3.scale.linear().range([40, width-40]);
 
-    var yScale1 = d3.scale.linear().range([20, 200]),
-        yScale2 = d3.scale.linear().range([260, 380]),
-        yScale3 = d3.scale.linear().range([440, 560]),
-        yScale4 = d3.scale.linear().range([620, 740]),
-        yScale5 = d3.scale.linear().range([800, 920]);
+        var yScale1 = d3.scale.linear().range([20, 200]),
+            yScale3 = d3.scale.linear().range([440, 560]),
+            yScale4 = d3.scale.linear().range([620, 740]),
+            yScale5 = d3.scale.linear().range([810, 930]),
+            yScale6 = d3.scale.linear().range([980, 1100]);
+
+        var yScale2;
 
     function plotTitles (){
 
@@ -130,17 +146,45 @@
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        svg.append('text')
-            .text('Delta')
-            .attr('x', width/4)
-            .attr('y', 270)
-            .attr('font-size', 14)
-            .attr('font-weight', 'bold')
-            .attr('fill','gray');
+        if($('#btnCall').hasClass('on') === true){
+
+            svg.append('text')
+                .text('Delta')
+                .attr('x', width/4)
+                .attr('y', 270)
+                .attr('font-size', 14)
+                .attr('font-weight', 'bold')
+                .attr('fill','gray');
+
+            svg.append('text')
+                .text('Rho')
+                .attr('x', width/4)
+                .attr('y', 990)
+                .attr('font-size', 14)
+                .attr('font-weight', 'bold')
+                .attr('fill','gray');
+
+        }   else{
+            svg.append('text')
+                .text('Delta')
+                .attr('x', 3*width/4)
+                .attr('y', 380)
+                .attr('font-size', 14)
+                .attr('font-weight', 'bold')
+                .attr('fill','gray');
+
+            svg.append('text')
+                .text('Rho')
+                .attr('x', 3*width/4)
+                .attr('y', 1100)
+                .attr('font-size', 14)
+                .attr('font-weight', 'bold')
+                .attr('fill','gray');
+        }
 
         svg.append('text')
             .text('Gamma')
-            .attr('x', width/4)
+            .attr('x', 3*width/4)
             .attr('y', 450)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
@@ -155,9 +199,9 @@
             .attr('fill','gray');
 
         svg.append('text')
-            .text('Rho')
+            .text('Theta')
             .attr('x', width/4)
-            .attr('y', 810)
+            .attr('y', 920)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill','gray');
@@ -174,7 +218,7 @@
 
             var x = i  * 2 *  K / width;
 
-            var y, delta, gamma, vega, rho;
+            var y, delta, gamma, vega, theta, rho;
 
             if (isNaN(BlackScholes('c',x, K, T, q, r, v)) === true) {
                 y = 0;
@@ -200,13 +244,19 @@
                 vega = Vega(x, K, T, q, r, v);
             }
 
+            if(isNaN(Theta('c',x, K, T, q, r, v)) === true) {
+                theta = 0;
+            }   else{
+                theta = Theta('c',x, K, T, q, r, v);
+            }
+
             if (isNaN(Rho('c',x, K, T, q, r, v)) === true) {
                 rho = 0;
             }   else{
                 rho = Rho('c',x, K, T, q, r, v);
             }
 
-            var data = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'rho': rho};
+            var data = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'theta': theta, 'rho': rho};
             callLineData.push(data);
 
         }
@@ -215,17 +265,17 @@
 
     }
 
-    var pullLineData = [];
+    var putLineData = [];
 
     function putCurve (K, T, q, r, v){
 
-        pullLineData = [];
+        putLineData = [];
 
         for (var i = 0; i < width ; i +=2) {
 
             var x = i  * 2 *  K / width;
 
-            var y, delta, gamma, vega, rho;
+            var y, delta, gamma, vega, theta, rho;
 
             if (isNaN(BlackScholes('p',x, K, T, q, r, v)) === true) {
                 y = 0;
@@ -251,18 +301,24 @@
                 vega = Vega(x, K, T, q, r, v);
             }
 
+            if(isNaN(Theta('p',x, K, T, q, r, v)) === true) {
+                theta = 0;
+            }   else{
+                theta = Theta('p',x, K, T, q, r, v);
+            }
+
             if (isNaN(Rho('p',x, K, T, q, r, v)) === true) {
                 rho = 0;
             }   else{
                 rho = Rho('p',x, K, T, q, r, v);
             }
 
-            var data2 = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'rho': rho};
-            pullLineData.push(data2);
+            var data2 = {'x': x,'y': y,'delta': delta, 'gamma': gamma, 'vega': vega, 'theta': theta, 'rho': rho};
+            putLineData.push(data2);
 
         }
 
-        return pullLineData;
+        return putLineData;
     }
 
     function plotAxes (){
@@ -271,33 +327,71 @@
 
         var xAxis1 = d3.svg.axis()
             .ticks(10)
-            .scale(xScale)
-            .orient('bottom');
+            .scale(xScale);
 
-        svg.append('g')
-            .attr('class','axis')
-            .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
-            .call(xAxis1);
+        if($('#btnCall').hasClass('on') === true){
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
+                .call(xAxis1.orient('bottom'));
 
-        svg.append('g')
-            .attr('class','axis')
-            .attr('transform', 'translate(' + 0 + ',' + 380 + ')')
-            .call(xAxis1);
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 380 + ')')
+                .call(xAxis1.orient('bottom'));
 
-        svg.append('g')
-            .attr('class','axis')
-            .attr('transform', 'translate(' + 0 + ',' + 560 + ')')
-            .call(xAxis1);
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 560 + ')')
+                .call(xAxis1.orient('bottom'));
 
-        svg.append('g')
-            .attr('class','axis')
-            .attr('transform', 'translate(' + 0 + ',' + 740 + ')')
-            .call(xAxis1);
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 740 + ')')
+                .call(xAxis1.orient('bottom'));
 
-        svg.append('g')
-            .attr('class','axis')
-            .attr('transform', 'translate(' + 0 + ',' + 920 + ')')
-            .call(xAxis1);
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 810 + ')')
+                .call(xAxis1.orient('top'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 1100 + ')')
+                .call(xAxis1.orient('bottom'));
+        }   else{
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
+                .call(xAxis1.orient('bottom'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 270 + ')')
+                .call(xAxis1.orient('top'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 560 + ')')
+                .call(xAxis1.orient('bottom'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 740 + ')')
+                .call(xAxis1.orient('bottom'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 810 + ')')
+                .call(xAxis1.orient('top'));
+
+            svg.append('g')
+                .attr('class','axis')
+                .attr('transform', 'translate(' + 0 + ',' + 980 + ')')
+                .call(xAxis1.orient('top'));
+        }
+
+
 
         var yAxis1 = d3.svg.axis()
             .ticks(5)
@@ -351,6 +445,16 @@
             .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
             .call(yAxis5);
 
+        var yAxis6 = d3.svg.axis()
+            .ticks(5)
+            .scale(yScale6)
+            .orient('left');
+
+        svg.append('g')
+            .attr('class','axis')
+            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .call(yAxis6);
+
         svg.selectAll('.axis line, .axis path')
             .style({ 'fill': 'none', 'stroke-width': '1', 'stroke': 'darkgray', 'shape-rendering': 'crispEdges'});
     }
@@ -375,14 +479,19 @@
                 .x(function(d){ return xScale(d.x); })
                 .y(function(d){ return yScale4(d.vega); }),
 
+            lineTheta = d3.svg.line()
+                .x(function(d){ return xScale(d.x); })
+                .y(function(d){ return yScale5(d.theta); }),
+
             lineRho = d3.svg.line()
                 .x(function(d){ return xScale(d.x); })
-                .y(function(d){ return yScale5(d.rho); });
+                .y(function(d){ return yScale6(d.rho); });
 
         d3.selectAll('path.blueline').remove();
         d3.selectAll('path.bluearea').remove();
 
-        if($('#btnCall').hasClass('on')){
+        if($('#btnCall').hasClass('on') === true){
+
             svg.append('path')
                 .datum(callLineData)
                 .attr('class', 'blueline')
@@ -395,6 +504,14 @@
                 .datum(callLineData)
                 .attr('class', 'blueline')
                 .attr('d', lineDelta)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+            svg.append('path')
+                .datum(callLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineTheta)
                 .attr('fill', 'none')
                 .attr('stroke', 'steelblue')
                 .attr('stroke-width', 3);
@@ -409,7 +526,7 @@
 
         }   else{
             svg.append('path')
-                .datum(pullLineData)
+                .datum(putLineData)
                 .attr('class', 'blueline')
                 .attr('d', linePremium)
                 .attr('fill', 'none')
@@ -417,7 +534,7 @@
                 .attr('stroke-width', 3);
 
             svg.append('path')
-                .datum(pullLineData)
+                .datum(putLineData)
                 .attr('class', 'blueline')
                 .attr('d', lineDelta)
                 .attr('fill', 'none')
@@ -425,7 +542,15 @@
                 .attr('stroke-width', 3);
 
             svg.append('path')
-                .datum(pullLineData)
+                .datum(putLineData)
+                .attr('class', 'blueline')
+                .attr('d', lineTheta)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 3);
+
+            svg.append('path')
+                .datum(putLineData)
                 .attr('class', 'blueline')
                 .attr('d', lineRho)
                 .attr('fill', 'none')
@@ -473,7 +598,7 @@
                 .attr('cx', xScale(Stock))
                 .attr('cy', yScale4(spotVega));
 
-            if($('#btnCall').hasClass('on')){
+            if($('#btnCall').hasClass('on') === true){
 
                 svg.append('circle')
                     .attr('class', 'circleRed')
@@ -491,7 +616,13 @@
                     .attr('class', 'circleRed')
                     .attr('r', 4)
                     .attr('cx', xScale(Stock))
-                    .attr('cy', yScale5(callRho));
+                    .attr('cy', yScale5(callTheta));
+
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale6(callRho));
 
                 svg.append('line')
                     .attr('class','lineRed')
@@ -518,7 +649,13 @@
                     .attr('class', 'circleRed')
                     .attr('r', 4)
                     .attr('cx', xScale(Stock))
-                    .attr('cy', yScale5(putRho));
+                    .attr('cy', yScale5(putTheta));
+
+                svg.append('circle')
+                    .attr('class', 'circleRed')
+                    .attr('r', 4)
+                    .attr('cx', xScale(Stock))
+                    .attr('cy', yScale6(putRho));
 
                 svg.append('line')
                     .attr('class','lineRed')
@@ -537,7 +674,7 @@
                     .attr('x1', xScale(Strike))
                     .attr('y1', 40)
                     .attr('x2', xScale(Strike))
-                    .attr('y2', 925);
+                    .attr('y2', 1105);
                     //.style('stroke-dasharray', ('5, 5'));
 
         }
@@ -549,7 +686,7 @@
                 .attr('x1', xScale(spotForward))
                 .attr('y1', 40)
                 .attr('x2', xScale(spotForward))
-                .attr('y2', 925)
+                .attr('y2', 1105)
                 .style('stroke-dasharray', ('5, 5'));
         }
 
@@ -572,7 +709,7 @@
 
     }
 
-    var callPremium, putPremium, callDelta, putDelta, callRho, putRho, spotForward, spotGamma, spotVega;
+    var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
 
     function update (){
 
@@ -587,10 +724,6 @@
 
         spotForward = Forward(Stock, Mat, Q, R);
 
-        spotGamma = Gamma(Stock, Strike, Mat, Q, R, Vol);
-
-        spotVega = Vega(Stock, Strike, Mat, Q, R, Vol);
-
         callPremium = BlackScholes('c', Stock, Strike, Mat, Q, R, Vol);
 
         putPremium = BlackScholes('p', Stock, Strike, Mat, Q, R, Vol);
@@ -598,6 +731,14 @@
         callDelta = Delta('c', Stock, Strike, Mat, Q, R, Vol);
 
         putDelta = Delta('p', Stock, Strike, Mat, Q, R, Vol);
+
+        spotGamma = Gamma(Stock, Strike, Mat, Q, R, Vol);
+
+        spotVega = Vega(Stock, Strike, Mat, Q, R, Vol);
+
+        callTheta = Theta('c', Stock, Strike, Mat, Q, R, Vol);
+
+        putTheta = Theta('p', Stock, Strike, Mat, Q, R, Vol);
 
         callRho = Rho('c', Stock, Strike, Mat, Q, R, Vol);
 
@@ -613,36 +754,55 @@
         $('#Drift span').html(Math.round(10000 * Drift)/100);
         $('#Forward span').html(Math.round(100 * spotForward)/100);
 
-        //window.console.log(Math.round(100 * spotForward)/100, spotForward);
-
-        $('#Gamma span').html(Math.round(10000 * spotGamma)/10000);
-        $('#Vega span').html(Math.round(100 * spotVega)/100);
+        $('.Gamma span').html(Math.round(10000 * spotGamma)/10000);
+        $('.Vega span').html(Math.round(100 * spotVega)/100);
 
         $('#callPremium span').html(Math.round(callPremium*100)/100);
         $('#callPremiumPct span').html(Math.round(callPremium/Stock*10000)/100);
         $('#callDelta span').html(Math.round(callDelta*10000)/10000);
+        $('#callTheta span').html(Math.round(callTheta*10000)/10000);
         $('#callRho span').html(Math.round(callRho*10000)/10000);
 
         $('#putPremium span').html(Math.round(putPremium*100)/100);
         $('#putPremiumPct span').html(Math.round(putPremium/Stock*10000)/100);
         $('#putDelta span').html(Math.round(putDelta*10000)/10000);
+        $('#putTheta span').html(Math.round(putTheta*10000)/10000);
         $('#putRho span').html(Math.round(putRho*10000)/10000);
-
-        xScale.domain([0, 2 * Strike]);
-        yScale1.domain([Strike, 0]);
-        yScale3.domain([0.06, 0]);
-        yScale4.domain([130, 0]);
-
-        if($('#btnCall').hasClass('on')){
-            yScale2.domain([1, 0]);
-            yScale5.domain([400, 0]);
-        }   else{
-            yScale2.domain([-1, 0]);
-            yScale5.domain([-400, 0]);
-        }
 
         callCurve(Strike, Mat, Q, R, Vol);
         putCurve(Strike, Mat, Q, R, Vol);
+
+        var ymaxcall = d3.max(callLineData,function(d){return d.y;}),
+            ymaxput = d3.max(putLineData,function(d){return d.y;}),
+            Dmaxcall = d3.max(callLineData,function(d){return d.delta;}),
+            Dminput = d3.min(putLineData,function(d){return d.delta;}),
+            Gmax = d3.max(callLineData,function(d){return d.gamma;}),
+            Vmax = d3.max(callLineData,function(d){return d.vega;}),
+            Tmincall = d3.min(callLineData,function(d){return d.theta;}),
+            Tminput = d3.min(putLineData,function(d){return d.theta;}),
+            Rmaxcall = d3.max(callLineData,function(d){return d.rho;}),
+            Rminput = d3.min(putLineData,function(d){return d.rho;});
+
+        xScale.domain([0, 2 * Strike]);
+
+        yScale3.domain([Gmax, 0]);
+        yScale4.domain([Vmax, 0]);
+
+        if($('#btnCall').hasClass('on') === true){
+            yScale1.domain([ymaxcall, 0]);
+            yScale2 = d3.scale.linear().range([260, 380]);
+            yScale2.domain([Dmaxcall, 0]);
+            yScale5.domain([0,Tmincall]);
+            yScale6.domain([Rmaxcall, 0]);
+        }   else{
+            yScale1.domain([ymaxput, 0]);
+            yScale2 = d3.scale.linear().range([270, 390]);
+            yScale2.domain([0, Dminput]);
+            yScale5.domain([0, Tminput]);
+            yScale6.domain([0, Rminput]);
+        }
+
+        plotTitles();
 
         plotAxes();
 
@@ -1010,9 +1170,9 @@
 
         $('#sliderRisk').slider({
             range: 'max',
-            min: -0.1,
+            min: -0.01,
             max: 0.1,
-            step: 0.005,
+            step: 0.001,
             value: 0.0,
             slide: function( event, ui ) {
                 var n = Math.round(ui.value * 10000) / 100;
@@ -1027,7 +1187,7 @@
             range: 'max',
             min: -0.1,
             max: 0.1,
-            step: 0.005,
+            step: 0.001,
             value: 0.0,
             slide: function( event, ui ) {
                 var n = Math.round(ui.value * 10000) / 100;
@@ -1111,20 +1271,22 @@
         $('#btnCall').click(function(){
             $('#btnPut').removeClass('on').addClass('off');
             $('#btnCall').switchClass('off','on');
-            $('#divGraphs h3 span').html('(Call)');
+            //$('#divGraphs h3 span').html('(Call)');
             update();
         });
 
         $('#btnPut').click(function(){
             $('#btnCall').removeClass('on').addClass('off');
             $('#btnPut').switchClass('off','on');
-            $('#divGraphs h3 span').html('(Put)');
+            //$('#divGraphs h3 span').html('(Put)');
             update();
         });
 
         plotTitles();
 
         audio();
+
+        update();
   });
 
 }(window.jQuery, window.d3));
