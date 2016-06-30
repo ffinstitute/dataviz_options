@@ -882,115 +882,43 @@
         update();
     }
 
+
+    //helper function
+    function processPercentage(v, name) {
+        switch (name) {
+            case 'Risk':
+            case 'Dividend':
+                v = Math.round(v * 10000) / 100;
+                if (v >= 0 && (v + '').length === 1) {
+                    v += '.0';
+                }
+                if (v < 0 && (v + '').length === 2) {
+                    v += '.0';
+                }
+                return v;
+
+            case 'Maturity':
+                if ((v + '').length === 1) {
+                    v += '.0';
+                }
+                return v;
+
+            case 'Volatility':
+                return Math.round(v * 10000 / 100);
+
+            default:
+                return v;
+        }
+    }
+
     // Slider inputs
     $(document).ready(function () {
 
         $('#divParameters').find('.slider').on('input', function () {
             update();
+            var name = this.id.replace('slider', '').slice(0, -1);
+            $('#' + name).find('span').text(processPercentage(this.value, name));
         });
-
-/*        $('#sliderStock').slider({
-            range: 'max',
-            min: 1,
-            max: 200,
-            step: 1,
-            value: 100,
-            slide: function (event, ui) {
-                $('#Stock').find('span').html(ui.value);
-            },
-            change: function () {
-                update();
-            }
-        });
-
-        $('#sliderStrike').slider({
-            range: 'max',
-            min: 1,
-            max: 200,
-            step: 1,
-            value: 100,
-            slide: function (event, ui) {
-                $('#Strike').find('span').html(ui.value);
-            },
-            change: function () {
-                update();
-            }
-        });
-
-        $('#sliderRisk').slider({
-            range: 'max',
-            min: -0.01,
-            max: 0.1,
-            step: 0.001,
-            value: 0.0,
-            slide: function (event, ui) {
-                var n = Math.round(ui.value * 10000) / 100;
-                if (n >= 0 && (n + '').length === 1) {
-                    n += '.0';
-                }
-                if (n < 0 && (n + '').length === 2) {
-                    n += '.0';
-                }
-                $('#Risk').find('span').html(n);
-            },
-            change: function () {
-                update();
-            }
-        });
-
-        $('#sliderDividend').slider({
-            range: 'max',
-            min: 0,
-            max: 0.05,
-            step: 0.001,
-            value: 0.0,
-            slide: function (event, ui) {
-                var n = Math.round(ui.value * 10000) / 100;
-                if (n >= 0 && (n + '').length === 1) {
-                    n += '.0';
-                }
-                if (n < 0 && (n + '').length === 2) {
-                    n += '.0';
-                }
-                $('#Dividend').find('span').html(n);
-            },
-            change: function () {
-                update();
-            }
-        });
-
-        $('#sliderMaturity').slider({
-            range: 'max',
-            min: 0,
-            max: 5,
-            step: 0.1,
-            value: 2.5,
-            slide: function (event, ui) {
-                var n = ui.value;
-                if ((n + '').length === 1) {
-                    n += '.0';
-                }
-                $('#Maturity').find('span').html(n);
-            },
-            change: function () {
-                update();
-            }
-        });
-
-        $('#sliderVolatility').slider({
-            range: 'max',
-            min: 0.05,
-            max: 0.5,
-            step: 0.01,
-            value: 0.4,
-            slide: function (event, ui) {
-                $('#Volatility').find('span').html(Math.round(ui.value * 10000) / 100);
-            },
-            change: function () {
-                update();
-            }
-        });*/
-
 
         setTimeout(update, 10);
 
