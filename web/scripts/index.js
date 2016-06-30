@@ -174,7 +174,7 @@
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        if ($('#btnCall').hasClass('on') === true) {
+        if ($('#btnCall').hasClass('on')) {
 
             svg.append('text')
                 .text('Delta')
@@ -248,37 +248,37 @@
 
             var y, delta, gamma, vega, theta, rho;
 
-            if (isNaN(BlackScholes('c', x, K, T, q, r, v)) === true) {
+            if (isNaN(BlackScholes('c', x, K, T, q, r, v))) {
                 y = 0;
             } else {
                 y = BlackScholes('c', x, K, T, q, r, v);
             }
 
-            if (isNaN(Delta('c', x, K, T, q, r, v)) === true) {
+            if (isNaN(Delta('c', x, K, T, q, r, v))) {
                 delta = 0;
             } else {
                 delta = Delta('c', x, K, T, q, r, v);
             }
 
-            if (isNaN(Gamma(x, K, T, q, r, v)) === true) {
+            if (isNaN(Gamma(x, K, T, q, r, v))) {
                 gamma = 0;
             } else {
                 gamma = Gamma(x, K, T, q, r, v);
             }
 
-            if (isNaN(Vega(x, K, T, q, r, v)) === true) {
+            if (isNaN(Vega(x, K, T, q, r, v))) {
                 vega = 0;
             } else {
                 vega = Vega(x, K, T, q, r, v);
             }
 
-            if (isNaN(Theta('c', x, K, T, q, r, v)) === true) {
+            if (isNaN(Theta('c', x, K, T, q, r, v))) {
                 theta = 0;
             } else {
                 theta = Theta('c', x, K, T, q, r, v);
             }
 
-            if (isNaN(Rho('c', x, K, T, q, r, v)) === true) {
+            if (isNaN(Rho('c', x, K, T, q, r, v))) {
                 rho = 0;
             } else {
                 rho = Rho('c', x, K, T, q, r, v);
@@ -305,37 +305,37 @@
 
             var y, delta, gamma, vega, theta, rho;
 
-            if (isNaN(BlackScholes('p', x, K, T, q, r, v)) === true) {
+            if (isNaN(BlackScholes('p', x, K, T, q, r, v))) {
                 y = 0;
             } else {
                 y = BlackScholes('p', x, K, T, q, r, v);
             }
 
-            if (isNaN(Delta('p', x, K, T, q, r, v)) === true) {
+            if (isNaN(Delta('p', x, K, T, q, r, v))) {
                 delta = 0;
             } else {
                 delta = Delta('p', x, K, T, q, r, v);
             }
 
-            if (isNaN(Gamma(x, K, T, q, r, v)) === true) {
+            if (isNaN(Gamma(x, K, T, q, r, v))) {
                 gamma = 0;
             } else {
                 gamma = Gamma(x, K, T, q, r, v);
             }
 
-            if (isNaN(Vega(x, K, T, q, r, v)) === true) {
+            if (isNaN(Vega(x, K, T, q, r, v))) {
                 vega = 0;
             } else {
                 vega = Vega(x, K, T, q, r, v);
             }
 
-            if (isNaN(Theta('p', x, K, T, q, r, v)) === true) {
+            if (isNaN(Theta('p', x, K, T, q, r, v))) {
                 theta = 0;
             } else {
                 theta = Theta('p', x, K, T, q, r, v);
             }
 
-            if (isNaN(Rho('p', x, K, T, q, r, v)) === true) {
+            if (isNaN(Rho('p', x, K, T, q, r, v))) {
                 rho = 0;
             } else {
                 rho = Rho('p', x, K, T, q, r, v);
@@ -357,7 +357,7 @@
             .ticks(10)
             .scale(xScale);
 
-        if ($('#btnCall').hasClass('on') === true) {
+        if ($('#btnCall').hasClass('on')) {
             svg.append('g')
                 .attr('class', 'axis')
                 .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
@@ -503,8 +503,6 @@
                 .y(function (d) {
                     return yScale2(d.delta);
                 }),
-        /*.y0(yScale2(0))
-         .y1(function(d){ return yScale2(d.delta); }),*/
 
             lineGamma = d3.svg.line()
                 .x(function (d) {
@@ -541,7 +539,7 @@
         d3.selectAll('path.blueline').remove();
         d3.selectAll('path.bluearea').remove();
 
-        if ($('#btnCall').hasClass('on') === true) {
+        if ($('#btnCall').hasClass('on')) {
 
             svg.append('path')
                 .datum(callLineData)
@@ -632,10 +630,10 @@
         svg.selectAll('circle').remove();
         svg.selectAll('line').remove();
 
-        var Stock = $('#sliderStock').slider('value');
-        var Strike = $('#sliderStrike').slider('value');
+        var Stock = parseInt($('#sliderStocki').val()),
+            Strike = parseInt($('#sliderStrikei').val());
 
-        if ($('#displaySpot')[0].checked === true) {
+        if ($('#displaySpot')[0].checked) {
 
             svg.append('circle')
                 .attr('class', 'circleRed')
@@ -649,7 +647,7 @@
                 .attr('cx', xScale(Stock))
                 .attr('cy', yScale4(spotVega));
 
-            if ($('#btnCall').hasClass('on') === true) {
+            if ($('#btnCall').hasClass('on')) {
 
                 svg.append('circle')
                     .attr('class', 'circleRed')
@@ -718,7 +716,7 @@
 
         }
 
-        if ($('#displayStrike')[0].checked === true) {
+        if ($('#displayStrike')[0].checked) {
 
             svg.append('line')
                 .attr('class', 'lineStrike')
@@ -730,7 +728,7 @@
 
         }
 
-        if ($('#displayForward')[0].checked === true) {
+        if ($('#displayForward')[0].checked) {
 
             svg.append('line')
                 .attr('class', 'lineForward')
@@ -763,26 +761,25 @@
     var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
 
     function update() {
-        console.log('updating');
-        var Stock = $('#sliderStock').slider('value');
-        var Strike = $('#sliderStrike').slider('value');
-        var Mat = $('#sliderMaturity').slider('value');
-        var R = $('#sliderRisk').slider('value');
-        var Q = $('#sliderDividend').slider('value');
-        var Vol = $('#sliderVolatility').slider('value');
+        var Stock = parseInt($('#sliderStocki').val()),
+            Strike = parseInt($('#sliderStrikei').val()),
+            Mat = parseFloat($('#sliderMaturityi').val()),
+            R = parseFloat($('#sliderRiski').val()),
+            Q = parseFloat($('#sliderDividendi').val()),
+            Vol = parseFloat($('#sliderVolatilityi').val());
 
-        var Drift = Q - R,
-            spotForward = Forward(Stock, Mat, Q, R),
-            callPremium = BlackScholes('c', Stock, Strike, Mat, Q, R, Vol),
-            putPremium = BlackScholes('p', Stock, Strike, Mat, Q, R, Vol),
-            callDelta = Delta('c', Stock, Strike, Mat, Q, R, Vol),
-            putDelta = Delta('p', Stock, Strike, Mat, Q, R, Vol),
-            spotGamma = Gamma(Stock, Strike, Mat, Q, R, Vol),
-            spotVega = Vega(Stock, Strike, Mat, Q, R, Vol),
-            callTheta = Theta('c', Stock, Strike, Mat, Q, R, Vol),
-            putTheta = Theta('p', Stock, Strike, Mat, Q, R, Vol),
-            callRho = Rho('c', Stock, Strike, Mat, Q, R, Vol),
-            putRho = Rho('p', Stock, Strike, Mat, Q, R, Vol);
+        var Drift = Q - R;
+        spotForward = Forward(Stock, Mat, Q, R);
+        callPremium = BlackScholes('c', Stock, Strike, Mat, Q, R, Vol);
+        putPremium = BlackScholes('p', Stock, Strike, Mat, Q, R, Vol);
+        callDelta = Delta('c', Stock, Strike, Mat, Q, R, Vol);
+        putDelta = Delta('p', Stock, Strike, Mat, Q, R, Vol);
+        spotGamma = Gamma(Stock, Strike, Mat, Q, R, Vol);
+        spotVega = Vega(Stock, Strike, Mat, Q, R, Vol);
+        callTheta = Theta('c', Stock, Strike, Mat, Q, R, Vol);
+        putTheta = Theta('p', Stock, Strike, Mat, Q, R, Vol);
+        callRho = Rho('c', Stock, Strike, Mat, Q, R, Vol);
+        putRho = Rho('p', Stock, Strike, Mat, Q, R, Vol);
 
         $('#Drift').find('span').html(Math.round(10000 * Drift) / 100);
         $('#Forward').find('span').html(Math.round(100 * spotForward) / 100);
@@ -862,21 +859,19 @@
         }
 
         plotTitles();
-
         plotAxes();
-
         plotGraphs();
-
         plotExtra();
     }
-    
+
     function reset() {
-        $('#sliderStock').slider('value', 100);
-        $('#sliderStrike').slider('value', 100);
-        $('#sliderRisk').slider('value', 0.0);
-        $('#sliderDividend').slider('value', 0.0);
-        $('#sliderMaturity').slider('value', 2.5);
-        $('#sliderVolatility').slider('value', 0.4);
+
+        $('#sliderStocki').val(100);
+        $('#sliderStrikei').val(100);
+        $('#sliderRiski').val(0);
+        $('#sliderDividendi').val(0);
+        $('#sliderMaturityi').val(2.5);
+        $('#sliderVolatilityi').val(0.4);
 
         $('#Stock').find('span').html(100);
         $('#Strike').find('span').html(100);
@@ -884,13 +879,17 @@
         $('#Dividend').find('span').html((0.0).toPrecision(2));
         $('#Maturity').find('span').html(2.5);
         $('#Volatility').find('span').html(40);
+        update();
     }
-
 
     // Slider inputs
     $(document).ready(function () {
 
-        $('#sliderStock').slider({
+        $('#divParameters').find('.slider').on('input', function () {
+            update();
+        });
+
+/*        $('#sliderStock').slider({
             range: 'max',
             min: 1,
             max: 200,
@@ -990,7 +989,7 @@
             change: function () {
                 update();
             }
-        });
+        });*/
 
 
         setTimeout(update, 10);
@@ -1043,7 +1042,6 @@
 
         plotTitles();
 
-        update();
     });
 
 }(window.jQuery, window.d3));
