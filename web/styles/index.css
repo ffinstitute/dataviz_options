@@ -1,0 +1,32 @@
+.on{
+    color: #BB362F;
+    font-size: 18px;
+}
+
+.off{
+    color: #555555;
+    font-size: 18px;
+}
+
+#allGraphs{
+    font: 10px sans-serif;
+}
+
+.displayInput{
+    margin-right: 10px;
+}
+
+.playa input[type=range] {
+    -webkit-appearance:none;
+    -moz-apperance:none;
+    background-color:#fff;
+    border: 1px solid #bbb;
+    height:.5em;
+    width:100%;
+    margin: 6px 0 0;
+    padding:0 !important;
+    line-height:0;
+}
+
+@media (min-width: 500px){
+}
