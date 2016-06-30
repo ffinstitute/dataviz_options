@@ -1,4 +1,4 @@
 # options
 Options and Greeks
 
-nouvelle version
+Redeveloped by MYLES in Jun 2016
