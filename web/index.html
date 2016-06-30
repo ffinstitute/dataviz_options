@@ -6,6 +6,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="jquery/ui/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/font-awesome.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
@@ -22,122 +23,124 @@
     <div class="row">
         <div class="col-xs-12">
             <h1>FIRST FINANCE Institute: Black-Scholes and Greeks</h1>
-            <dfn>Understanding how option pricing works!</dfn>
+            <p><dfn>Understanding how option pricing works!</dfn></p>
         </div>
     </div>
-    <div class="col-xs-6">
-        <div id="divParameters" class="panel panel-primary" style="display: block">
-            <div class="panel-heading">
-                <button id="btnReset" class="btn btn-primary btn-xs pull-right" style="display: inline-block"><i
-                        class="glyphicon glyphicon-refresh"></i></button>
-                <h3 class="panel-title">Parameters</h3>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div id="divParameters" class="panel panel-primary" style="display: block">
+                <div class="panel-heading">
+                    <button id="btnReset" class="btn btn-primary btn-xs pull-right"><i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <h3 class="panel-title">Parameters</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="col-xs-6" role="form">
+                        <div class="form-group">
+                            <label id="Stock">Stock Price (S) = <span>100</span> $</label>
+                            <div id="sliderStock"></div>
+                        </div>
+                        <div class="form-group">
+                            <label id="Risk">Risk-Free Rate (r) = <span>0.0</span>%</label>
+                            <div id="sliderRisk"></div>
+                        </div>
+                        <div class="form-group">
+                            <label id="Maturity">Time to Maturity (τ) = <span>2.5</span> Years</label>
+                            <div id="sliderMaturity"></div>
+                        </div>
+                    </form>
+                    <form class="col-xs-6" role="form">
+                        <div class="form-group">
+                            <label id="Strike">Strike Price (K) = <span>100</span> $</label>
+                            <div id="sliderStrike"></div>
+                        </div>
+                        <div class="form-group">
+                            <label id="Dividend">Annual Dividend Yield (q) = <span>0.0</span>%</label>
+                            <div id="sliderDividend"></div>
+                        </div>
+                        <div class="form-group">
+                            <label id="Volatility">Volatility (σ) = <span>40</span>%</label>
+                            <div id="sliderVolatility"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="panel-body">
-                <form class="col-xs-6" role="form">
-                    <div class="form-group">
-                        <label id="Stock">Stock Price (S) = <span>100</span> $</label>
-                        <div id="sliderStock"></div>
+            <div id="divPrices" class="panel panel-primary" style="display: block">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prices</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <table class="table">
+                            <tr>
+                                <td style="font-weight: bold">Drift</td>
+                                <td id="Drift" style="text-align: right"><span></span>%</td>
+                                <td style="font-weight: bold; text-align: right">Forward</td>
+                                <td id="Forward" style="text-align: right"><span></span> $</td>
+                            </tr>
+                        </table>
+                        <table class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th style="text-align: right"><span id="btnCall" class="on toggle">Call</span></th>
+                                <th style="text-align: right"><span id="btnPut" class="off toggle">Put</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style="font-weight: bold">Premium</td>
+                                <td></td>
+                                <td id="callPremium" style="text-align: right"><span></span> $</td>
+                                <td id="putPremium" style="text-align: right"><span></span> $</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Premium (%)</td>
+                                <td></td>
+                                <td id="callPremiumPct" style="text-align: right"><span></span>%</td>
+                                <td id="putPremiumPct" style="text-align: right"><span></span>%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Delta</td>
+                                <td></td>
+                                <td id="callDelta" style="text-align: right"><span></span></td>
+                                <td id="putDelta" style="text-align: right"><span></span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Gamma</td>
+                                <td></td>
+                                <td class="Gamma" style="text-align: right"><span></span></td>
+                                <td class="Gamma" style="text-align: right"><span></span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Vega</td>
+                                <td></td>
+                                <td class="Vega" style="text-align: right"><span></span></td>
+                                <td class="Vega" style="text-align: right"><span></span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Theta</td>
+                                <td></td>
+                                <td id="callTheta" style="text-align: right"><span></span></td>
+                                <td id="putTheta" style="text-align: right"><span></span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">Rho</td>
+                                <td></td>
+                                <td id="callRho" style="text-align: right"><span></span></td>
+                                <td id="putRho" style="text-align: right"><span></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label id="Risk">Risk-Free Rate (r) = <span>0.0</span>%</label>
-                        <div id="sliderRisk"></div>
-                    </div>
-                    <div class="form-group">
-                        <label id="Maturity">Time to Maturity (τ) = <span>2.5</span> Years</label>
-                        <div id="sliderMaturity"></div>
-                    </div>
-                </form>
-                <form class="col-xs-6" role="form">
-                    <div class="form-group">
-                        <label id="Strike">Strike Price (K) = <span>100</span> $</label>
-                        <div id="sliderStrike"></div>
-                    </div>
-                    <div class="form-group">
-                        <label id="Dividend">Annual Dividend Yield (q) = <span>0.0</span>%</label>
-                        <div id="sliderDividend"></div>
-                    </div>
-                    <div class="form-group">
-                        <label id="Volatility">Volatility (σ) = <span>40</span>%</label>
-                        <div id="sliderVolatility"></div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="divPrices" class="panel panel-primary" style="display: block">
-            <div class="panel-heading">
-                <h3 class="panel-title">Prices</h3>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <table class="table">
-                        <tr>
-                            <td style="font-weight: bold">Drift</td>
-                            <td id="Drift" style="text-align: right"><span></span>%</td>
-                            <td style="font-weight: bold; text-align: right">Forward</td>
-                            <td id="Forward" style="text-align: right"><span></span> $</td>
-                        </tr>
-                    </table>
-                    <table class="table table-hover table-condensed">
-                        <thead>
-                        <tr>
-                            <th colspan="2"></th>
-                            <th style="text-align: right"><a id="btnCall" class="on" type="button">Call</a></th>
-                            <th style="text-align: right"><a id="btnPut" class="off" type="button">Put</a></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td style="font-weight: bold">Premium</td>
-                            <td></td>
-                            <td id="callPremium" style="text-align: right"><span></span> $</td>
-                            <td id="putPremium" style="text-align: right"><span></span> $</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Premium (%)</td>
-                            <td></td>
-                            <td id="callPremiumPct" style="text-align: right"><span></span>%</td>
-                            <td id="putPremiumPct" style="text-align: right"><span></span>%</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Delta</td>
-                            <td></td>
-                            <td id="callDelta" style="text-align: right"><span></span></td>
-                            <td id="putDelta" style="text-align: right"><span></span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Gamma</td>
-                            <td></td>
-                            <td class="Gamma" style="text-align: right"><span></span></td>
-                            <td class="Gamma" style="text-align: right"><span></span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Vega</td>
-                            <td></td>
-                            <td class="Vega" style="text-align: right"><span></span></td>
-                            <td class="Vega" style="text-align: right"><span></span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Theta</td>
-                            <td></td>
-                            <td id="callTheta" style="text-align: right"><span></span></td>
-                            <td id="putTheta" style="text-align: right"><span></span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: bold">Rho</td>
-                            <td></td>
-                            <td id="callRho" style="text-align: right"><span></span></td>
-                            <td id="putRho" style="text-align: right"><span></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-xs-6">
-        <div id="divGraphs" class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row pull-right" style="margin-top: -6px">
+        <div class="col-xs-6">
+            <div id="divGraphs" class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row pull-right" style="margin-top: -6px">
                     <span class="displayInput"><label style="font-weight: normal"><input id="displaySpot"
                                                                                          type="checkbox" checked>
                         Spot</label></span>
@@ -146,17 +149,20 @@
                         Forward</label></span>
                     <span class="displayInput"><label style="font-weight: normal"><input id="displayStrike"
                                                                                          type="checkbox"> Strike</label></span>
-                    <div class="btn-group displayInput">
-                        <button type="button" id="btnCall1" class="btn btn-sm btn-primary active"> Call</button>
-                        <button type="button" id="btnPut1" class="btn btn-sm btn-primary"> Put</button>
+                        <div class="btn-group displayInput">
+                            <button type="button" id="btnCall1" class="btn btn-sm btn-primary active">Call</button>
+                            <button type="button" id="btnPut1" class="btn btn-sm btn-primary">Put</button>
+                        </div>
                     </div>
+                    <h3 class="panel-title">Graphs <span>(Call)</span></h3>
                 </div>
-                <h3 class="panel-title">Graphs <span>(Call)</span></h3>
-            </div>
-            <div id="allGraphs" class="panel-body">
+                <div id="allGraphs" class="panel-body">
+                </div>
             </div>
         </div>
-    </div>
+
+    </div> <!-- end of row -->
+
 </div>
 
 <script src="./scripts/index.js"></script>
