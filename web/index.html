@@ -40,39 +40,39 @@
                     <form class="col-xs-12" role="form">
                         <div class="form-group">
                             <label id="Stock">Stock Price (S) = <span>100</span> $</label>
-                            <div id="sliderStock"></div>
+                            <input class="slider" id="sliderStock" type="range" min="1" max="200" step="1"
+                                   value="100"/>
                         </div>
-                        <input class="slider" id="sliderStocki" type="range" min="1" max="200" step="1" value="100"/>
 
                         <div class="form-group">
                             <label id="Strike">Strike Price (K) = <span>100</span> $</label>
-                            <div id="sliderStrike"></div>
+                            <input class="slider" id="sliderStrike" type="range" min="1" max="200" step="1"
+                                   value="100"/>
                         </div>
-                        <input class="slider" id="sliderStrikei" type="range" min="1" max="200" step="1" value="100"/>
 
                         <div class="form-group">
                             <label id="Risk">Risk-Free Rate (r) = <span>0.0</span>%</label>
-                            <div id="sliderRisk"></div>
+                            <input class="slider" id="sliderRisk" type="range" min="-0.01" max="0.1" step="0.001"
+                                   value="0"/>
                         </div>
-                        <input class="slider" id="sliderRiski" type="range" min="-0.01" max="0.1" step="0.001" value="0"/>
 
                         <div class="form-group">
                             <label id="Dividend">Dividend Yield (q) = <span>0.0</span>%</label>
-                            <div id="sliderDividend"></div>
+                            <input class="slider" id="sliderDividend" type="range" min="0" max="0.05" step="0.001"
+                                   value="0"/>
                         </div>
-                        <input class="slider" id="sliderDividendi" type="range" min="0" max="0.05" step="0.001" value="0"/>
 
                         <div class="form-group">
                             <label id="Maturity">Time to Maturity (τ) = <span>2.5</span> Years</label>
-                            <div id="sliderMaturity"></div>
+                            <input class="slider" id="sliderMaturity" type="range" min="0.1" max="5" step="0.1"
+                                   value="2.5"/>
                         </div>
-                        <input class="slider" id="sliderMaturityi" type="range" min="0" max="5" step="0.1" value="2.5"/>
 
                         <div class="form-group">
                             <label id="Volatility">Volatility (σ) = <span>40</span>%</label>
-                            <div id="sliderVolatility"></div>
+                            <input class="slider" id="sliderVolatility" type="range" min="0.05" max="0.5" step="0.01"
+                                   value="0.4"/>
                         </div>
-                        <input class="slider" id="sliderVolatilityi" type="range" min="0.05" max="0.5" step="0.01" value="0.4"/>
 
                     </form>
                 </div>

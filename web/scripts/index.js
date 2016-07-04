@@ -630,8 +630,8 @@
         svg.selectAll('circle').remove();
         svg.selectAll('line').remove();
 
-        var Stock = parseInt($('#sliderStocki').val()),
-            Strike = parseInt($('#sliderStrikei').val());
+        var Stock = parseInt($('#sliderStock').val()),
+            Strike = parseInt($('#sliderStrike').val());
 
         if ($('#displaySpot')[0].checked) {
 
@@ -761,12 +761,12 @@
     var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
 
     function update() {
-        var Stock = parseInt($('#sliderStocki').val()),
-            Strike = parseInt($('#sliderStrikei').val()),
-            Mat = parseFloat($('#sliderMaturityi').val()),
-            R = parseFloat($('#sliderRiski').val()),
-            Q = parseFloat($('#sliderDividendi').val()),
-            Vol = parseFloat($('#sliderVolatilityi').val());
+        var Stock = parseInt($('#sliderStock').val()),
+            Strike = parseInt($('#sliderStrike').val()),
+            Mat = parseFloat($('#sliderMaturity').val()),
+            R = parseFloat($('#sliderRisk').val()),
+            Q = parseFloat($('#sliderDividend').val()),
+            Vol = parseFloat($('#sliderVolatility').val());
 
         var Drift = Q - R;
         spotForward = Forward(Stock, Mat, Q, R);
@@ -866,12 +866,12 @@
 
     function reset() {
 
-        $('#sliderStocki').val(100);
-        $('#sliderStrikei').val(100);
-        $('#sliderRiski').val(0);
-        $('#sliderDividendi').val(0);
-        $('#sliderMaturityi').val(2.5);
-        $('#sliderVolatilityi').val(0.4);
+        $('#sliderStock').val(100);
+        $('#sliderStrike').val(100);
+        $('#sliderRisk').val(0);
+        $('#sliderDividend').val(0);
+        $('#sliderMaturity').val(2.5);
+        $('#sliderVolatility').val(0.4);
 
         $('#Stock').find('span').html(100);
         $('#Strike').find('span').html(100);
@@ -906,7 +906,7 @@
 
         $('#divParameters').find('.slider').on('input', function () {
             update();
-            var name = this.id.replace('slider', '').slice(0, -1);
+            var name = this.id.replace('slider', '');
             $('#' + name).find('span').text(processPercentage(this.value, name));
         });
 
