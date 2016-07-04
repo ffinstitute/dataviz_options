@@ -1,23 +1,27 @@
-.container {
-    margin: 20px 0;
+#divPrices.call table #btnCall, #divPrices.put table #btnPut, #divPrices.call td.call, #divPrices.put td.put {
+    color: #000;
 }
 
-.toggle {
+#divPrices.call table #btnPut, #divPrices.put table #btnCall,#divPrices.put td.call, #divPrices.call td.put {
+    color: #888888;
+}
+
+#divPrices .toggle {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+td.call, td.put {
     cursor: pointer;
 }
-
-.on {
-    color: #BB362F;
-    font-size: 18px;
-}
-
-.off {
-    color: #555555;
-    font-size: 18px;
+#divPrices.put td.call:hover,#divPrices.call td.put:hover {
+    background: #bbbbbb;
+    color: #FFF;
 }
 
 #allGraphs {
     font: 10px sans-serif;
+    padding: 0;
 }
 
 .picture {

@@ -144,6 +144,7 @@
 
     }
 
+
     var width = $('#divGraphs').find('.panel-body').width(),
         height = 1130;
 
@@ -152,7 +153,7 @@
         .attr('width', width)
         .attr('height', height);
 
-    var xScale = d3.scale.linear().range([40, width - 40]);
+    var xScale = d3.scale.linear().range([40, width]);
 
     var yScale1 = d3.scale.linear().range([20, 200]),
         yScale3 = d3.scale.linear().range([440, 560]),
@@ -161,6 +162,15 @@
         yScale6 = d3.scale.linear().range([980, 1100]);
 
     var yScale2;
+
+    function updateSize() {
+        width = $('#divGraphs').find('.panel-body').width();
+
+        svg.attr('width', width);
+
+        xScale = d3.scale.linear().range([40, width]);
+        update();
+    }
 
     function plotTitles() {
 
@@ -174,7 +184,7 @@
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        if ($('#btnCall').hasClass('on')) {
+        if ($('#divPrices').hasClass('call')) {
 
             svg.append('text')
                 .text('Delta')
@@ -192,7 +202,7 @@
                 .attr('font-weight', 'bold')
                 .attr('fill', 'gray');
 
-        } else {
+        } else if ($('#divPrices').hasClass('put')) {
             svg.append('text')
                 .text('Delta')
                 .attr('x', 3 * width / 4)
@@ -357,7 +367,7 @@
             .ticks(10)
             .scale(xScale);
 
-        if ($('#btnCall').hasClass('on')) {
+        if ($('#divPrices').hasClass('call')) {
             svg.append('g')
                 .attr('class', 'axis')
                 .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
@@ -387,7 +397,7 @@
                 .attr('class', 'axis')
                 .attr('transform', 'translate(' + 0 + ',' + 1100 + ')')
                 .call(xAxis1.orient('bottom'));
-        } else {
+        } else if ($('#divPrices').hasClass('put')) {
             svg.append('g')
                 .attr('class', 'axis')
                 .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
@@ -539,7 +549,7 @@
         d3.selectAll('path.blueline').remove();
         d3.selectAll('path.bluearea').remove();
 
-        if ($('#btnCall').hasClass('on')) {
+        if ($('#divPrices').hasClass('call')) {
 
             svg.append('path')
                 .datum(callLineData)
@@ -573,7 +583,7 @@
                 .attr('stroke', 'steelblue')
                 .attr('stroke-width', 3);
 
-        } else {
+        } else if ($('#divPrices').hasClass('put')) {
             svg.append('path')
                 .datum(putLineData)
                 .attr('class', 'blueline')
@@ -647,7 +657,7 @@
                 .attr('cx', xScale(Stock))
                 .attr('cy', yScale4(spotVega));
 
-            if ($('#btnCall').hasClass('on')) {
+            if ($('#divPrices').hasClass('call')) {
 
                 svg.append('circle')
                     .attr('class', 'circleRed')
@@ -680,7 +690,7 @@
                     .attr('x2', xScale(Stock + 40))
                     .attr('y2', yScale1(callDelta * (40) + callPremium));
 
-            } else {
+            } else if ($('#divPrices').hasClass('put')) {
 
                 svg.append('circle')
                     .attr('class', 'circleRed')
@@ -717,19 +727,15 @@
         }
 
         if ($('#displayStrike')[0].checked) {
-
             svg.append('line')
                 .attr('class', 'lineStrike')
                 .attr('x1', xScale(Strike))
                 .attr('y1', 40)
                 .attr('x2', xScale(Strike))
                 .attr('y2', 1105);
-            //.style('stroke-dasharray', ('5, 5'));
-
         }
 
         if ($('#displayForward')[0].checked) {
-
             svg.append('line')
                 .attr('class', 'lineForward')
                 .attr('x1', xScale(spotForward))
@@ -739,14 +745,14 @@
                 .style('stroke-dasharray', ('5, 5'));
         }
 
-        if ($('#btnCall').hasClass('on')) {
+        if ($('#divPrices').hasClass('call')) {
             svg.append('line')
                 .attr('class', 'lineRef')
                 .attr('x1', xScale(Strike))
                 .attr('y1', yScale1(0))
                 .attr('x2', xScale(Strike * 2))
                 .attr('y2', yScale1(Strike));
-        } else {
+        } else if ($('#divPrices').hasClass('put')) {
             svg.append('line')
                 .attr('class', 'lineRef')
                 .attr('x1', xScale(Strike))
@@ -844,13 +850,13 @@
         yScale3.domain([Gmax, 0]);
         yScale4.domain([Vmax, 0]);
 
-        if ($('#btnCall').hasClass('on')) {
+        if ($('#divPrices').hasClass('call')) {
             yScale1.domain([ymaxcall, 0]);
             yScale2 = d3.scale.linear().range([260, 380]);
             yScale2.domain([Dmaxcall, 0]);
             yScale5.domain([Tmaxcall, Tmincall]);
             yScale6.domain([Rmaxcall, 0]);
-        } else {
+        } else if ($('#divPrices').hasClass('put')) {
             yScale1.domain([ymaxput, 0]);
             yScale2 = d3.scale.linear().range([270, 390]);
             yScale2.domain([0, Dminput]);
@@ -916,20 +922,17 @@
 
         $('.ui-slider-handle').css('border-color', '#00297B');
 
-        $('#displaySpot').val($(this).is(':checked'))
-            .change(function () {
-                plotExtra();
-            });
+        $('#displaySpot').change(function () {
+            plotExtra();
+        });
 
-        $('#displayForward').val($(this).is(':checked'))
-            .change(function () {
-                plotExtra();
-            });
+        $('#displayForward').change(function () {
+            plotExtra();
+        });
 
-        $('#displayStrike').val($(this).is(':checked'))
-            .change(function () {
-                plotExtra();
-            });
+        $('#displayStrike').change(function () {
+            plotExtra();
+        });
 
         $('#btnReset').click(function () {
             reset();
@@ -940,25 +943,23 @@
             pause: 'hover'
         });
 
-        $('#btnCall, #btnCall1').click(function () {
-            $('#btnPut').removeClass('on').addClass('off');
-            $('#btnCall').removeClass('off').addClass('on');
-            $('#btnPut1').removeClass('active');
-            $('#btnCall1').addClass('active');
+        $('#btnCall, td.call').click(function () {
+            $('#divPrices').addClass('call').removeClass('put');
             $('#divGraphs').find('h3 span').html('(Call)');
             update();
         });
 
-        $('#btnPut, #btnPut1').click(function () {
-            $('#btnCall').removeClass('on').addClass('off');
-            $('#btnPut').removeClass('off').addClass('on');
-            $('#btnCall1').removeClass('active');
-            $('#btnPut1').addClass('active');
+        $('#btnPut, td.put').click(function () {
+            $('#divPrices').addClass('put').removeClass('call');
             $('#divGraphs').find('h3 span').html('(Put)');
             update();
         });
 
         plotTitles();
+
+        d3.select(window).on('resize', function () {
+            updateSize();
+        });
 
     });
 
