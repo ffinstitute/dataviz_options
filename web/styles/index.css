@@ -5,9 +5,10 @@
 #divPrices.call table #btnPut, #divPrices.put table #btnCall,#divPrices.put td.call, #divPrices.call td.put {
     color: #888888;
 }
-
-#divPrices .toggle {
+.toggle {
     cursor: pointer;
+}
+#divPrices .toggle {
     font-size: 18px;
 }
 
@@ -22,6 +23,12 @@ td.call, td.put {
 #allGraphs {
     font: 10px sans-serif;
     padding: 0;
+}
+
+@media (min-width: 1200px) {
+    .container-fluid {
+        width: 1200px;
+    }
 }
 
 .picture {
