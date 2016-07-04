@@ -153,7 +153,8 @@
         .attr('width', width)
         .attr('height', height);
 
-    var xScale = d3.scale.linear().range([40, width]);
+    var rightMargin = 15;
+    var xScale = d3.scale.linear().range([50, width - rightMargin]);
 
     var yScale1 = d3.scale.linear().range([20, 200]),
         yScale3 = d3.scale.linear().range([440, 560]),
@@ -168,7 +169,7 @@
 
         svg.attr('width', width);
 
-        xScale = d3.scale.linear().range([40, width]);
+        xScale = d3.scale.linear().range([50, width - rightMargin]);
         update();
     }
 
@@ -365,7 +366,8 @@
 
         var xAxis1 = d3.svg.axis()
             .ticks(10)
-            .scale(xScale);
+            .scale(xScale),
+            leftMargin = 40;
 
         if ($('#divPrices').hasClass('call')) {
             svg.append('g')
@@ -439,7 +441,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis1);
 
         var yAxis2 = d3.svg.axis()
@@ -449,7 +451,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis2);
 
         var yAxis3 = d3.svg.axis()
@@ -459,7 +461,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis3);
 
         var yAxis4 = d3.svg.axis()
@@ -469,7 +471,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis4);
 
         var yAxis5 = d3.svg.axis()
@@ -479,7 +481,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis5);
 
         var yAxis6 = d3.svg.axis()
@@ -489,7 +491,7 @@
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(' + 40 + ', ' + 0 + ')')
+            .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis6);
 
         svg.selectAll('.axis line, .axis path')
