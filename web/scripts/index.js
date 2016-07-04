@@ -888,23 +888,13 @@
         switch (name) {
             case 'Risk':
             case 'Dividend':
-                v = Math.round(v * 10000) / 100;
-                if (v >= 0 && (v + '').length === 1) {
-                    v += '.0';
-                }
-                if (v < 0 && (v + '').length === 2) {
-                    v += '.0';
-                }
-                return v;
+                v = v * 100;
 
             case 'Maturity':
-                if ((v + '').length === 1) {
-                    v += '.0';
-                }
-                return v;
+                return parseFloat(v).toFixed(1);
 
             case 'Volatility':
-                return Math.round(v * 10000 / 100);
+                return Math.round(v * 100);
 
             default:
                 return v;
