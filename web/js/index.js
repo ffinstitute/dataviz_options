@@ -175,76 +175,93 @@
 
     function plotTitles() {
 
-        svg.selectAll('text').remove();
+        // svg.selectAll('text').remove();
 
-        svg.append('text')
+        var g0 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,20)");
+        g0.append('rect')
+            .attr('width', 171)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g0.append('text')
             .text('Pay-out and Option Value')
-            .attr('x', width / 4)
-            .attr('y', 30)
+            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        if ($('#divPrices').hasClass('call')) {
+        var g1, g2, g3, g4, g5;
 
-            svg.append('text')
-                .text('Delta')
-                .attr('x', width / 4)
-                .attr('y', 270)
-                .attr('font-size', 14)
-                .attr('font-weight', 'bold')
-                .attr('fill', 'gray');
+        g1 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,260)");
+        g1.append('rect')
+            .attr('width', 35)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g1.append('text')
+            .text('Delta')
+            .attr('y', 15)
+            .attr('font-size', 14)
+            .attr('font-weight', 'bold')
+            .attr('fill', 'gray');
 
-            svg.append('text')
-                .text('Rho')
-                .attr('x', width / 4)
-                .attr('y', 990)
-                .attr('font-size', 14)
-                .attr('font-weight', 'bold')
-                .attr('fill', 'gray');
-
-        } else if ($('#divPrices').hasClass('put')) {
-            svg.append('text')
-                .text('Delta')
-                .attr('x', 3 * width / 4)
-                .attr('y', 380)
-                .attr('font-size', 14)
-                .attr('font-weight', 'bold')
-                .attr('fill', 'gray');
-
-            svg.append('text')
-                .text('Rho')
-                .attr('x', 3 * width / 4)
-                .attr('y', 1100)
-                .attr('font-size', 14)
-                .attr('font-weight', 'bold')
-                .attr('fill', 'gray');
-        }
-
-        svg.append('text')
+        g2 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,440)");
+        g2.append('rect')
+            .attr('width', 52)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g2.append('text')
             .text('Gamma')
-            .attr('x', 3 * width / 4)
-            .attr('y', 450)
+            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        svg.append('text')
+        g3 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,620)");
+        g3.append('rect')
+            .attr('width', 35)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g3.append('text')
             .text('Vega')
-            .attr('x', width / 4)
-            .attr('y', 630)
+            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        svg.append('text')
+        g4 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,820)");
+        g4.append('rect')
+            .attr('width', 39)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g4.append('text')
             .text('Theta')
-            .attr('x', width / 4)
-            .attr('y', 930)
+            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
+        g5 = svg.append('g')
+            .attr('class', 'title')
+            .attr('transform', "translate(50,980)");
+        g5.append('rect')
+            .attr('width', 29)
+            .attr('height', 20)
+            .style('fill', "#FFF");
+        g5.append('text')
+            .text('Rho')
+            .attr('y', 15)
+            .attr('font-size', 14)
+            .attr('font-weight', 'bold')
+            .attr('fill', 'gray');
     }
 
     var callLineData = [];
@@ -362,7 +379,7 @@
 
     function plotAxes() {
 
-        svg.selectAll('g').remove();
+        svg.selectAll('g.axis').remove();
 
         var xAxis1 = d3.svg.axis()
                 .ticks(10)
@@ -857,10 +874,10 @@
             yScale6.domain([0, Rminput]);
         }
 
-        plotTitles();
         plotAxes();
         plotGraphs();
         plotExtra();
+        plotTitles();
     }
 
     function reset() {
@@ -947,8 +964,6 @@
             $('#divGraphs').find('h3 span').html('(Put)');
             update();
         });
-
-        plotTitles();
 
         d3.select(window).on('resize', function () {
             updateSize();
