@@ -145,7 +145,7 @@
     }
 
 
-    var width = $('#divGraphs').find('.panel-body').width(),
+    var width = $('#divGraphs').width(),
         height = 1130;
 
     var svg = d3.select('#allGraphs')
@@ -165,7 +165,7 @@
     var yScale2;
 
     function updateSize() {
-        width = $('#divGraphs').find('.panel-body').width();
+        width = $('#divGraphs').width();
 
         svg.attr('width', width);
 
@@ -645,107 +645,100 @@
         var Stock = parseInt($('#sliderStock').val()),
             Strike = parseInt($('#sliderStrike').val());
 
-        if ($('#displaySpot')[0].checked) {
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', xScale(Stock))
+            .attr('cy', yScale3(spotGamma));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', xScale(Stock))
+            .attr('cy', yScale4(spotVega));
+
+        if ($('#divPrices').hasClass('call')) {
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
                 .attr('cx', xScale(Stock))
-                .attr('cy', yScale3(spotGamma));
+                .attr('cy', yScale1(callPremium));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
                 .attr('cx', xScale(Stock))
-                .attr('cy', yScale4(spotVega));
+                .attr('cy', yScale2(callDelta));
 
-            if ($('#divPrices').hasClass('call')) {
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale5(callTheta));
 
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale1(callPremium));
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale6(callRho));
 
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale2(callDelta));
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale5(callTheta));
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale6(callRho));
-
-                svg.append('line')
-                    .attr('class', 'lineRed')
-                    .attr('x1', xScale(Stock - 40))
-                    .attr('y1', yScale1(callDelta * (-40) + callPremium))
-                    .attr('x2', xScale(Stock + 40))
-                    .attr('y2', yScale1(callDelta * (40) + callPremium));
-
-            } else if ($('#divPrices').hasClass('put')) {
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale1(putPremium));
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale2(putDelta));
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale5(putTheta));
-
-                svg.append('circle')
-                    .attr('class', 'circleRed')
-                    .attr('r', 4)
-                    .attr('cx', xScale(Stock))
-                    .attr('cy', yScale6(putRho));
-
-                svg.append('line')
-                    .attr('class', 'lineRed')
-                    .attr('x1', xScale(Stock - 40))
-                    .attr('y1', yScale1(putDelta * (-40) + putPremium))
-                    .attr('x2', xScale(Stock + 40))
-                    .attr('y2', yScale1(putDelta * (40) + putPremium));
-            }
-
-        }
-
-        if ($('#displayStrike')[0].checked) {
             svg.append('line')
-                .attr('class', 'lineStrike')
-                .attr('x1', xScale(Strike))
-                .attr('y1', 40)
-                .attr('x2', xScale(Strike))
-                .attr('y2', 1105);
+                .attr('class', 'lineRed')
+                .attr('x1', xScale(Stock - 40))
+                .attr('y1', yScale1(callDelta * (-40) + callPremium))
+                .attr('x2', xScale(Stock + 40))
+                .attr('y2', yScale1(callDelta * (40) + callPremium));
+
+        } else if ($('#divPrices').hasClass('put')) {
+
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale1(putPremium));
+
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale2(putDelta));
+
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale5(putTheta));
+
+            svg.append('circle')
+                .attr('class', 'circleRed')
+                .attr('r', 4)
+                .attr('cx', xScale(Stock))
+                .attr('cy', yScale6(putRho));
+
+            svg.append('line')
+                .attr('class', 'lineRed')
+                .attr('x1', xScale(Stock - 40))
+                .attr('y1', yScale1(putDelta * (-40) + putPremium))
+                .attr('x2', xScale(Stock + 40))
+                .attr('y2', yScale1(putDelta * (40) + putPremium));
         }
 
-        if ($('#displayForward')[0].checked) {
-            svg.append('line')
-                .attr('class', 'lineForward')
-                .attr('x1', xScale(spotForward))
-                .attr('y1', 40)
-                .attr('x2', xScale(spotForward))
-                .attr('y2', 1105)
-                .style('stroke-dasharray', ('5, 5'));
-        }
+        svg.append('line')
+            .attr('class', 'lineStrike')
+            .attr('x1', xScale(Strike))
+            .attr('y1', 40)
+            .attr('x2', xScale(Strike))
+            .attr('y2', 1105);
+
+        svg.append('line')
+            .attr('class', 'lineForward')
+            .attr('x1', xScale(spotForward))
+            .attr('y1', 40)
+            .attr('x2', xScale(spotForward))
+            .attr('y2', 1105)
+            .style('stroke-dasharray', ('5, 5'));
 
         if ($('#divPrices').hasClass('call')) {
             svg.append('line')
@@ -762,8 +755,6 @@
                 .attr('x2', xScale(0))
                 .attr('y2', yScale1(Strike));
         }
-
-
     }
 
     var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
@@ -924,17 +915,17 @@
 
         $('.ui-slider-handle').css('border-color', '#00297B');
 
-        $('#displaySpot').change(function () {
-            plotExtra();
-        });
+        /*$('#displaySpot').change(function () {
+         plotExtra();
+         });
 
-        $('#displayForward').change(function () {
-            plotExtra();
-        });
+         $('#displayForward').change(function () {
+         plotExtra();
+         });
 
-        $('#displayStrike').change(function () {
-            plotExtra();
-        });
+         $('#displayStrike').change(function () {
+         plotExtra();
+         });*/
 
         $('#btnReset').click(function () {
             reset();

@@ -37,151 +37,109 @@
 
     <div class="row">
         <div class="col-sm-5">
-            <div id="divParameters" class="panel panel-default" style="display: block">
-                <div class="panel-heading">
-                    <button id="btnReset" class="btn btn-default btn-xs pull-right">
-                        <i class="fa fa-undo" aria-hidden="true"></i>
-                    </button>
-                    <h3 class="panel-title">Parameters</h3>
+            <form role="form" id="divParameters">
+                <div class="form-group">
+                    <label id="Stock">Stock Price (S) = <span>100</span> $</label>
+                    <input class="slider" id="sliderStock" type="range" min="1" max="200" step="1"
+                           value="100"/>
                 </div>
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label id="Stock">Stock Price (S) = <span>100</span> $</label>
-                            <input class="slider" id="sliderStock" type="range" min="1" max="200" step="1"
-                                   value="100"/>
-                        </div>
 
-                        <div class="form-group">
-                            <label id="Strike">Strike Price (K) = <span>100</span> $</label>
-                            <input class="slider" id="sliderStrike" type="range" min="1" max="200" step="1"
-                                   value="100"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="Risk">Risk-Free Rate (r) = <span>0.0</span>%</label>
-                            <input class="slider" id="sliderRisk" type="range" min="-0.01" max="0.1" step="0.001"
-                                   value="0"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="Dividend">Dividend Yield (q) = <span>0.0</span>%</label>
-                            <input class="slider" id="sliderDividend" type="range" min="0" max="0.05" step="0.001"
-                                   value="0"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="Maturity">Time to Maturity (τ) = <span>2.5</span> Years</label>
-                            <input class="slider" id="sliderMaturity" type="range" min="0.1" max="5" step="0.1"
-                                   value="2.5"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="Volatility">Volatility (σ) = <span>40</span>%</label>
-                            <input class="slider" id="sliderVolatility" type="range" min="0.05" max="0.5" step="0.01"
-                                   value="0.4"/>
-                        </div>
-
-                    </form>
+                <div class="form-group">
+                    <label id="Strike">Strike Price (K) = <span>100</span> $</label>
+                    <input class="slider" id="sliderStrike" type="range" min="1" max="200" step="1"
+                           value="100"/>
                 </div>
-            </div>
 
-            <div id="divPrices" class="panel panel-default call" style="display: block">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Prices</h3>
+                <div class="form-group">
+                    <label id="Risk">Risk-Free Rate (r) = <span>0.0</span>%</label>
+                    <input class="slider" id="sliderRisk" type="range" min="-0.01" max="0.1" step="0.001"
+                           value="0"/>
                 </div>
-                <div class="panel-body">
-                    <div>
-                        <table class="table table-striped table-condensed">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th style="text-align: right"><span id="btnCall" class="on toggle">Call</span></th>
-                                <th style="text-align: right"><span id="btnPut" class="off toggle">Put</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td style="font-weight: bold">Premium</td>
-                                <td class="call" id="callPremium" style="text-align: right"><span></span> $</td>
-                                <td class="put" id="putPremium" style="text-align: right"><span></span> $</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Premium (%)</td>
-                                <td class="call" id="callPremiumPct" style="text-align: right"><span></span>%</td>
-                                <td class="put" id="putPremiumPct" style="text-align: right"><span></span>%</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Delta</td>
-                                <td class="call" id="callDelta" style="text-align: right"><span></span></td>
-                                <td class="put" id="putDelta" style="text-align: right"><span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Gamma</td>
-                                <td class="Gamma call" style="text-align: right"><span></span></td>
-                                <td class="Gamma put" style="text-align: right"><span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Vega</td>
-                                <td class="Vega call" style="text-align: right"><span></span></td>
-                                <td class="Vega put" style="text-align: right"><span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Theta</td>
-                                <td class="call" id="callTheta" style="text-align: right"><span></span></td>
-                                <td class="put" id="putTheta" style="text-align: right"><span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold">Rho</td>
-                                <td class="call" id="callRho" style="text-align: right"><span></span></td>
-                                <td class="put" id="putRho" style="text-align: right"><span></span></td>
-                            </tr>
-                            </tbody>
-                        </table>
 
-                        <span style="padding-left:0px; padding-bottom:9px; font-size:14px">
+                <div class="form-group">
+                    <label id="Dividend">Dividend Yield (q) = <span>0.0</span>%</label>
+                    <input class="slider" id="sliderDividend" type="range" min="0" max="0.05" step="0.001"
+                           value="0"/>
+                </div>
+
+                <div class="form-group">
+                    <label id="Maturity">Time to Maturity (τ) = <span>2.5</span> Years</label>
+                    <input class="slider" id="sliderMaturity" type="range" min="0.1" max="5" step="0.1"
+                           value="2.5"/>
+                </div>
+
+                <div class="form-group">
+                    <label id="Volatility">Volatility (σ) = <span>40</span>%</label>
+                    <input class="slider" id="sliderVolatility" type="range" min="0.05" max="0.5" step="0.01"
+                           value="0.4"/>
+                </div>
+
+            </form>
+
+            <table class="table table-striped table-condensed call" id="divPrices">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th style="text-align: right"><span id="btnCall" class="on toggle">Call</span></th>
+                    <th style="text-align: right"><span id="btnPut" class="off toggle">Put</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="font-weight: bold">Premium</td>
+                    <td class="call" id="callPremium" style="text-align: right"><span></span> $</td>
+                    <td class="put" id="putPremium" style="text-align: right"><span></span> $</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Premium (%)</td>
+                    <td class="call" id="callPremiumPct" style="text-align: right"><span></span>%</td>
+                    <td class="put" id="putPremiumPct" style="text-align: right"><span></span>%</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Delta</td>
+                    <td class="call" id="callDelta" style="text-align: right"><span></span></td>
+                    <td class="put" id="putDelta" style="text-align: right"><span></span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Gamma</td>
+                    <td class="Gamma call" style="text-align: right"><span></span></td>
+                    <td class="Gamma put" style="text-align: right"><span></span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Vega</td>
+                    <td class="Vega call" style="text-align: right"><span></span></td>
+                    <td class="Vega put" style="text-align: right"><span></span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Theta</td>
+                    <td class="call" id="callTheta" style="text-align: right"><span></span></td>
+                    <td class="put" id="putTheta" style="text-align: right"><span></span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Rho</td>
+                    <td class="call" id="callRho" style="text-align: right"><span></span></td>
+                    <td class="put" id="putRho" style="text-align: right"><span></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <span style="padding-left:0px; padding-bottom:9px; font-size:14px">
                             <strong>
                                 Drift (q-r) =
                                 <label id="Drift"><span></span>%</label>
                             </strong>
                         </span>
-                        <span style="padding-left:0px;font-size:14px">
+            <span style="padding-left:0px;font-size:14px">
                              <strong>
                                  Fwd =
                                  <label id="Forward"><span></span>$</label>
                              </strong>
-                         </span>
+            </span>
 
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="col-xs-7">
-            <div id="divGraphs" class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row pull-right">
-                    <span class="displayInput">
-                        <label style="font-weight: normal" class="toggle">
-                            <input id="displaySpot" type="checkbox" checked>
-                            Spot
-                        </label>
-                    </span>
-                        <span class="displayInput toggle">
-                        <label style="font-weight: normal" class="toggle">
-                            <input id="displayForward" type="checkbox">
-                            Forward
-                        </label>
-                    </span>
-                        <span class="displayInput toggle">
-                        <label style="font-weight: normal" class="toggle">
-                            <input id="displayStrike" type="checkbox">
-                            Strike
-                        </label>
-                    </span>
-                    </div>
-                    <h3 class="panel-title">Graphs <span>(Call)</span></h3>
-                </div>
-                <div id="allGraphs" class="panel-body">
+        <div class="col-sm-7">
+            <div id="divGraphs">
+                <div id="allGraphs">
                 </div>
             </div>
         </div>
