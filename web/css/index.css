@@ -1,0 +1,116 @@
+#divPrices.call table #btnCall, #divPrices.put table #btnPut, #divPrices.call td.call, #divPrices.put td.put {
+    color: #000;
+}
+
+#divPrices.call table #btnPut, #divPrices.put table #btnCall,#divPrices.put td.call, #divPrices.call td.put {
+    color: #888888;
+}
+.toggle {
+    cursor: pointer;
+}
+#divPrices .toggle {
+    font-size: 18px;
+}
+
+td.call, td.put {
+    cursor: pointer;
+}
+#divPrices.put td.call:hover,#divPrices.call td.put:hover {
+    background: #bbbbbb;
+    color: #FFF;
+}
+
+#allGraphs {
+    font: 10px sans-serif;
+    padding: 0;
+}
+
+@media (min-width: 1200px) {
+    .container-fluid {
+        width: 780px;
+    }
+}
+
+.picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lineRef {
+    stroke: gray;
+    stroke-width: 1px;
+}
+
+.circleRed {
+    fill: #BB362F;
+}
+
+.lineRed {
+    stroke: #BB362F;
+    stroke-width: 2px;
+}
+
+.lineForward {
+    stroke: SeaGreen;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.lineStrike {
+    stroke: darkslategray;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+    opacity: 0.3;
+}
+
+.displayInput {
+    margin-right: 10px;
+}
+
+.playa input[type=range] {
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    height: .5em;
+    width: 100%;
+    margin: 0;
+    margin-top: 6px;
+    padding: 0 !important;
+    line-height: 0;
+}
+
+.playa .thumbnail {
+    width: 96%;
+    padding: 1.5%;
+}
+
+.playa .btn-group {
+    text-align: center;
+}
+
+@media (min-width: 500px) {
+    .playa .btn-group .btn {
+        padding: 4px 3px;
+        margin: auto;
+        border: 1px solid #bbb;
+        background-color: #fff;
+        display: inline-block;
+        float: none;
+        height: 30px;
+    }
+
+    .playa .btn-group .span1 {
+        width: 20%;
+    }
+
+    .playa .btn-group .span4 {
+        width: 50%;
+    }
+
+    .playa.span2 .btn-group .btn, .playa.span1 .btn-group .btn, .span2 .playa .btn-group .btn, .span1 .playa .btn-group .btn {
+        width: 100%;
+        display: block;
+    }
+}
