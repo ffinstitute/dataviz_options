@@ -365,8 +365,8 @@
         svg.selectAll('g').remove();
 
         var xAxis1 = d3.svg.axis()
-            .ticks(10)
-            .scale(xScale),
+                .ticks(10)
+                .scale(xScale),
             leftMargin = 40;
 
         if ($('#divPrices').hasClass('call')) {
@@ -501,12 +501,12 @@
     function plotGraphs() {
 
         var linePremium = d3.svg.line()
-            .x(function (d) {
-                return xScale(d.x);
-            })
-            .y(function (d) {
-                return yScale1(d.y);
-            }),
+                .x(function (d) {
+                    return xScale(d.x);
+                })
+                .y(function (d) {
+                    return yScale1(d.y);
+                }),
 
             lineDelta = d3.svg.line()
                 .x(function (d) {
