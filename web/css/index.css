@@ -42,7 +42,7 @@ td.call, td.put {
 
 .lineRef {
     stroke: gray;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 .circleRed {
@@ -56,13 +56,13 @@ td.call, td.put {
 
 .lineForward {
     stroke: SeaGreen;
-    stroke-width: 1px;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
 }
 
 .lineStrike {
     stroke: darkslategray;
-    stroke-width: 1px;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
     opacity: 0.3;
 }
@@ -120,4 +120,20 @@ td.call, td.put {
 
 table#divPrices td.call, table#divPrices td.put {
     width: 85px;
+}
+
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 6px 0;
+    font: 12px sans-serif;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 2px;
+    pointer-events: none;
+    color: #fff;
+    font-weight: 200;
 }

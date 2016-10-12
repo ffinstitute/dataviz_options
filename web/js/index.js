@@ -707,7 +707,47 @@
         // override clip-path of lineRed to graph1-clip
         svg.selectAll('line.lineRed').attr('clip-path', 'url(#graph1-clip)');
 
+        svg.selectAll('.circleRed')
+            .attr('stroke', '#a00000')
+            .attr('stroke-width', 0);
 
+        svg.selectAll('.circleRed, .lineRed, .lineRef, .lineStrike, .lineForward')
+            .on("mouseover", function () {
+                var my_class = this.classList[0];
+                $(this).css('stroke-width', '4px');
+                switch (my_class) {
+                    case 'circleRed':
+                    case 'lineRed':
+                        window.tooltipDiv.html("Spot");
+                        break;
+
+                    case 'lineRef':
+                        window.tooltipDiv.html("Reference");
+                        break;
+
+                    case 'lineStrike':
+                        window.tooltipDiv.html("Strike");
+                        break;
+
+                    case 'lineForward':
+                        window.tooltipDiv.html("Forward");
+                        break;
+                }
+
+                window.tooltipDiv.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+                window.tooltipDiv
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function () {
+                $(this).css('stroke-width', '');
+                window.tooltipDiv.transition()
+                    .delay(500)
+                    .duration(50)
+                    .style("opacity", 0);
+            });
     }
 
     var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
@@ -863,6 +903,11 @@
 
     // Slider inputs
     $(document).ready(function () {
+
+        // initiate tooltip
+        window.tooltipDiv = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
         $('#divParameters').find('.slider').on('input', function () {
             update();
