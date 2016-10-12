@@ -153,7 +153,7 @@
         .attr('width', width)
         .attr('height', height);
 
-    var rightMargin = 15,
+    var rightMargin = 10,
         leftMargin = 48;
     var xScale = d3.scale.linear().range([leftMargin, width - rightMargin]);
 
@@ -169,7 +169,7 @@
 
         svg.attr('width', width);
 
-        xScale = d3.scale.linear().range([50, width - rightMargin]);
+        xScale = d3.scale.linear().range([leftMargin, width - rightMargin]);
         update();
     }
 
@@ -365,17 +365,16 @@
             .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis1);
 
-
         // add clip path for graph 1
         svg.append('defs')
             .attr('class', 'axis')
             .append('clipPath')
             .attr('id', 'graph1-clip')
             .append('rect')
-            .attr('x', 40)
-            .attr('y', 10)
-            .attr('width', 445)
-            .attr('height', 160);
+            .attr('x', leftMargin)
+            .attr('y', 9)
+            .attr('width', width - rightMargin - leftMargin)
+            .attr('height', 162);
 
         var yAxis2 = d3.svg.axis()
             .ticks(5)
@@ -432,6 +431,17 @@
     }
 
     function plotGraphs() {
+
+        // add clip path for whole graph
+        svg.append('defs')
+            .attr('class', 'axis')
+            .append('clipPath')
+            .attr('id', 'graph-clip')
+            .append('rect')
+            .attr('x', leftMargin)
+            .attr('y', 9)
+            .attr('width', width - rightMargin - leftMargin)
+            .attr('height', height - 30);
 
         var linePremium = d3.svg.line()
                 .x(function (d) {
@@ -579,6 +589,8 @@
             Strike = parseInt($('#sliderStrike').val());
 
 
+        var stockX = xScale(Stock);
+
         svg.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
@@ -596,25 +608,25 @@
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale1(callPremium));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale2(callDelta));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale5(callTheta));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale6(callRho));
 
             svg.append('line')
@@ -622,33 +634,32 @@
                 .attr('x1', xScale(Stock - 40))
                 .attr('y1', yScale1(callDelta * (-40) + callPremium))
                 .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(callDelta * (40) + callPremium))
-                .attr('clip-path', 'url(#graph1-clip)');
+                .attr('y2', yScale1(callDelta * (40) + callPremium));
 
         } else if ($('#divPrices').hasClass('put')) {
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale1(putPremium));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale2(putDelta));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale5(putTheta));
 
             svg.append('circle')
                 .attr('class', 'circleRed')
                 .attr('r', 4)
-                .attr('cx', xScale(Stock))
+                .attr('cx', stockX)
                 .attr('cy', yScale6(putRho));
 
             svg.append('line')
@@ -656,8 +667,7 @@
                 .attr('x1', xScale(Stock - 40))
                 .attr('y1', yScale1(putDelta * (-40) + putPremium))
                 .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(putDelta * (40) + putPremium))
-                .attr('clip-path', 'url(#graph1-clip)');
+                .attr('y2', yScale1(putDelta * (40) + putPremium));
         }
 
         svg.append('line')
@@ -681,17 +691,23 @@
                 .attr('x1', xScale(Strike))
                 .attr('y1', yScale1(0))
                 .attr('x2', xScale(Strike * 2))
-                .attr('y2', yScale1(Strike))
-                .attr('clip-path', 'url(#graph1-clip)');
+                .attr('y2', yScale1(Strike));
         } else if ($('#divPrices').hasClass('put')) {
             svg.append('line')
                 .attr('class', 'lineRef')
                 .attr('x1', xScale(Strike))
                 .attr('y1', yScale1(0))
                 .attr('x2', xScale(0))
-                .attr('y2', yScale1(Strike))
-                .attr('clip-path', 'url(#graph1-clip)');
+                .attr('y2', yScale1(Strike));
         }
+
+        // apply clip-path to all extra
+        svg.selectAll('circle, line').attr('clip-path', 'url(#graph-clip)');
+
+        // override clip-path of lineRed to graph1-clip
+        svg.selectAll('line.lineRed').attr('clip-path', 'url(#graph1-clip)');
+
+
     }
 
     var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
