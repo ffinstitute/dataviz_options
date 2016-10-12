@@ -2,12 +2,14 @@
     color: #000;
 }
 
-#divPrices.call table #btnPut, #divPrices.put table #btnCall,#divPrices.put td.call, #divPrices.call td.put {
+#divPrices.call table #btnPut, #divPrices.put table #btnCall, #divPrices.put td.call, #divPrices.call td.put {
     color: #888888;
 }
+
 .toggle {
     cursor: pointer;
 }
+
 #divPrices .toggle {
     font-size: 18px;
 }
@@ -15,7 +17,8 @@
 td.call, td.put {
     cursor: pointer;
 }
-#divPrices.put td.call:hover,#divPrices.call td.put:hover {
+
+#divPrices.put td.call:hover, #divPrices.call td.put:hover {
     background: #bbbbbb;
     color: #FFF;
 }
@@ -113,4 +116,8 @@ td.call, td.put {
         width: 100%;
         display: block;
     }
+}
+
+table#divPrices td.call, table#divPrices td.put {
+    width: 85px;
 }

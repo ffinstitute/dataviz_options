@@ -4,8 +4,6 @@
 
     <meta charset="utf-8">
 
-    <link href="css/index.css" rel="stylesheet">
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="jquery/ui/jquery-ui.min.css" rel="stylesheet">
@@ -13,6 +11,9 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <!-- User CSS overriding everything -->
+    <link href="css/index.css" rel="stylesheet">
 
     <script src="jquery/jquery-1.11.3.min.js"></script>
     <script src="jquery/jquery-migrate-1.2.1.min.js"></script>
@@ -80,8 +81,16 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th style="text-align: right"><span id="btnCall" class="on toggle">Call</span></th>
-                    <th style="text-align: right"><span id="btnPut" class="off toggle">Put</span></th>
+                    <th colspan="2" style="text-align: right; padding: 5px 0;">
+                        <div id="call-put-btn-group" class="btn-group" data-toggle="buttons" style="width: 100%;">
+                            <label class="btn btn-xs btn-default active" style="width: 50%;">
+                                <input type="radio" name="call-put" id="btnCall" autocomplete="off">Call
+                            </label>
+                            <label class="btn btn-xs btn-default" style="width: 50%;">
+                                <input type="radio" name="call-put" id="btnPut" autocomplete="off">Put
+                            </label>
+                        </div>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -120,21 +129,33 @@
                     <td class="call" id="callRho" style="text-align: right"><span></span></td>
                     <td class="put" id="putRho" style="text-align: right"><span></span></td>
                 </tr>
+                <tr>
+                    <td style="font-weight: bold">Drift (=q-r)</td>
+                    <td id="Drift" style="text-align: center" colspan="2">
+                        <span>0</span>%
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Fwd</td>
+                    <td id="Forward" style="text-align: center" colspan="2">
+                        <span>100</span> $
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
-            <span style="padding-left:0px; padding-bottom:9px; font-size:14px">
-                            <strong>
-                                Drift (q-r) =
-                                <label id="Drift"><span></span>%</label>
-                            </strong>
-                        </span>
-            <span style="padding-left:0px;font-size:14px">
+            <!-- <span style="padding-left:0px; padding-bottom:9px; font-size:14px">
                              <strong>
-                                 Fwd =
-                                 <label id="Forward"><span></span>$</label>
+                                 Drift (q-r) =
+                                 <label id="Drift"><span></span>%</label>
                              </strong>
-            </span>
+                         </span>
+             <span style="padding-left:0px;font-size:14px">
+                              <strong>
+                                  Fwd =
+                                  <label id="Forward"><span></span>$</label>
+                              </strong>
+             </span>-->
 
         </div>
         <div class="col-sm-7">

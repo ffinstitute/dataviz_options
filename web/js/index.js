@@ -872,6 +872,17 @@
         }
     }
 
+    function switchMode(is_call) {
+        if (is_call) {
+            $('#divPrices').addClass('call').removeClass('put');
+            $('#divGraphs').find('h3 span').html('(Call)');
+        } else {
+            $('#divPrices').addClass('put').removeClass('call');
+            $('#divGraphs').find('h3 span').html('(Put)');
+        }
+        update();
+    }
+
     // Slider inputs
     $(document).ready(function () {
 
@@ -883,21 +894,24 @@
 
         setTimeout(update, 10);
 
+        $('#divPrices thead input:radio[name="call-put"]').change(function () {
+            switch (this.id) {
+                case 'btnCall':
+                    switchMode(true);
+                    break;
+
+                case 'btnPut':
+                    switchMode(false);
+                    break;
+
+                default:
+                    console.warn("Unknown mode change. Element changed:", this);
+            }
+        });
+
         $('.ui-slider').css('background', '#00297B');
 
         $('.ui-slider-handle').css('border-color', '#00297B');
-
-        /*$('#displaySpot').change(function () {
-         plotExtra();
-         });
-
-         $('#displayForward').change(function () {
-         plotExtra();
-         });
-
-         $('#displayStrike').change(function () {
-         plotExtra();
-         });*/
 
         $('#btnReset').click(function () {
             reset();
@@ -908,16 +922,14 @@
             pause: 'hover'
         });
 
-        $('#btnCall, td.call').click(function () {
-            $('#divPrices').addClass('call').removeClass('put');
-            $('#divGraphs').find('h3 span').html('(Call)');
-            update();
+        $('td.call').click(function () {
+            switchMode(true);
+            $('#btnCall').parent().button('toggle');
         });
 
-        $('#btnPut, td.put').click(function () {
-            $('#divPrices').addClass('put').removeClass('call');
-            $('#divGraphs').find('h3 span').html('(Put)');
-            update();
+        $('td.put').click(function () {
+            switchMode(false);
+            $('#btnPut').parent().button('toggle');
         });
 
         d3.select(window).on('resize', function () {
