@@ -733,23 +733,23 @@
         callRho = Rho('c', Stock, Strike, Mat, Q, R, Vol);
         putRho = Rho('p', Stock, Strike, Mat, Q, R, Vol);
 
-        $('#Drift').find('span').html(Math.round(10000 * Drift) / 100);
-        $('#Forward').find('span').html(Math.round(100 * spotForward) / 100);
+        $('#Drift').find('span').html((100 * Drift).toFixed(1));
+        $('#Forward').find('span').html(spotForward.toFixed(2));
 
-        $('.Gamma span').html(Math.round(10000 * spotGamma) / 10000);
-        $('.Vega span').html(Math.round(100 * spotVega) / 100);
+        $('.Gamma span').html((spotGamma).toFixed(4));
+        $('.Vega span').html(spotVega.toFixed(2));
 
-        $('#callPremium').find('span').html(Math.round(callPremium * 100) / 100);
-        $('#callPremiumPct').find('span').html(Math.round(callPremium / Stock * 10000) / 100);
-        $('#callDelta').find('span').html(Math.round(callDelta * 10000) / 10000);
-        $('#callTheta').find('span').html(Math.round(callTheta * 10000) / 10000);
-        $('#callRho').find('span').html(Math.round(callRho * 10000) / 10000);
+        $('#callPremium').find('span').html(callPremium.toFixed(2));
+        $('#callPremiumPct').find('span').html((callPremium / Stock * 100).toFixed(2));
+        $('#callDelta').find('span').html(callDelta.toFixed(4));
+        $('#callTheta').find('span').html(callTheta.toFixed(4));
+        $('#callRho').find('span').html(callRho.toFixed(4));
 
-        $('#putPremium').find('span').html(Math.round(putPremium * 100) / 100);
-        $('#putPremiumPct').find('span').html(Math.round(putPremium / Stock * 10000) / 100);
-        $('#putDelta').find('span').html(Math.round(putDelta * 10000) / 10000);
-        $('#putTheta').find('span').html(Math.round(putTheta * 10000) / 10000);
-        $('#putRho').find('span').html(Math.round(putRho * 10000) / 10000);
+        $('#putPremium').find('span').html(putPremium.toFixed(2));
+        $('#putPremiumPct').find('span').html((putPremium / Stock * 100).toFixed(2));
+        $('#putDelta').find('span').html(putDelta.toFixed(4));
+        $('#putTheta').find('span').html(putTheta.toFixed(4));
+        $('#putRho').find('span').html(putRho.toFixed(4));
 
         callCurve(Strike, Mat, Q, R, Vol);
         putCurve(Strike, Mat, Q, R, Vol);
