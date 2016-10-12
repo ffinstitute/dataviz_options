@@ -40,6 +40,12 @@ td.call, td.put {
     margin-right: auto;
 }
 
+.curveBlue {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3;
+}
+
 .lineRef {
     stroke: gray;
     stroke-width: 2px;
@@ -121,7 +127,6 @@ td.call, td.put {
 table#divPrices td.call, table#divPrices td.put {
     width: 85px;
 }
-
 
 div.tooltip {
     position: absolute;

@@ -491,92 +491,51 @@
                     return yScale6(d.rho);
                 });
 
-        d3.selectAll('path.blueline').remove();
-        d3.selectAll('path.bluearea').remove();
+        d3.selectAll('path.curveBlue').remove();
 
+        var lineData;
         if ($('#divPrices').hasClass('call')) {
-
-            svg.append('path')
-                .datum(callLineData)
-                .attr('class', 'blueline')
-                .attr('d', linePremium)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(callLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineDelta)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(callLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineTheta)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(callLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineRho)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
+            lineData = callLineData;
         } else if ($('#divPrices').hasClass('put')) {
-            svg.append('path')
-                .datum(putLineData)
-                .attr('class', 'blueline')
-                .attr('d', linePremium)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(putLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineDelta)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(putLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineTheta)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
-
-            svg.append('path')
-                .datum(putLineData)
-                .attr('class', 'blueline')
-                .attr('d', lineRho)
-                .attr('fill', 'none')
-                .attr('stroke', 'steelblue')
-                .attr('stroke-width', 3);
+            lineData = putLineData;
         }
 
         svg.append('path')
-            .datum(callLineData)
-            .attr('class', 'blueline')
-            .attr('d', lineGamma)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 3);
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'premium-line')
+            .attr('d', linePremium);
 
         svg.append('path')
-            .datum(callLineData)
-            .attr('class', 'blueline')
-            .attr('d', lineVega)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 3);
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'delta-line')
+            .attr('d', lineDelta);
+
+        svg.append('path')
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'gamma-line')
+            .attr('d', lineGamma);
+
+        svg.append('path')
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'vega-line')
+            .attr('d', lineVega);
+
+        svg.append('path')
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'theta-line')
+            .attr('d', lineTheta);
+
+        svg.append('path')
+            .datum(lineData)
+            .attr('class', 'curveBlue')
+            .attr('id', 'rho-line')
+            .attr('d', lineRho);
+
 
     }
 
@@ -591,99 +550,18 @@
 
         var stockX = xScale(Stock);
 
-        svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale3(spotGamma));
-
-        svg.append('circle')
-            .attr('class', 'circleRed')
-            .attr('r', 4)
-            .attr('cx', xScale(Stock))
-            .attr('cy', yScale4(spotVega));
-
+        var premium, delta, theta, rho;
         if ($('#divPrices').hasClass('call')) {
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale1(callPremium));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale2(callDelta));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale5(callTheta));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale6(callRho));
-
-            svg.append('line')
-                .attr('class', 'lineRed')
-                .attr('x1', xScale(Stock - 40))
-                .attr('y1', yScale1(callDelta * (-40) + callPremium))
-                .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(callDelta * (40) + callPremium));
-
+            premium = premiumData['call'];
+            delta = deltaData['call'];
+            theta = thetaData['call'];
+            rho = rhoData['call'];
         } else if ($('#divPrices').hasClass('put')) {
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale1(putPremium));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale2(putDelta));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale5(putTheta));
-
-            svg.append('circle')
-                .attr('class', 'circleRed')
-                .attr('r', 4)
-                .attr('cx', stockX)
-                .attr('cy', yScale6(putRho));
-
-            svg.append('line')
-                .attr('class', 'lineRed')
-                .attr('x1', xScale(Stock - 40))
-                .attr('y1', yScale1(putDelta * (-40) + putPremium))
-                .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(putDelta * (40) + putPremium));
+            premium = premiumData['put'];
+            delta = deltaData['put'];
+            theta = thetaData['put'];
+            rho = rhoData['put'];
         }
-
-        svg.append('line')
-            .attr('class', 'lineStrike')
-            .attr('x1', xScale(Strike))
-            .attr('y1', 10)
-            .attr('x2', xScale(Strike))
-            .attr('y2', 820);
-
-        svg.append('line')
-            .attr('class', 'lineForward')
-            .attr('x1', xScale(spotForward))
-            .attr('y1', 10)
-            .attr('x2', xScale(spotForward))
-            .attr('y2', 820)
-            .style('stroke-dasharray', ('5, 5'));
 
         if ($('#divPrices').hasClass('call')) {
             svg.append('line')
@@ -701,6 +579,65 @@
                 .attr('y2', yScale1(Strike));
         }
 
+        svg.append('line')
+            .attr('class', 'lineStrike')
+            .attr('x1', xScale(Strike))
+            .attr('y1', 10)
+            .attr('x2', xScale(Strike))
+            .attr('y2', 820);
+
+        svg.append('line')
+            .attr('class', 'lineForward')
+            .attr('x1', xScale(spotForward))
+            .attr('y1', 10)
+            .attr('x2', xScale(spotForward))
+            .attr('y2', 820)
+            .style('stroke-dasharray', ('5, 5'));
+
+        svg.append('line')
+            .attr('class', 'lineRed')
+            .attr('x1', xScale(Stock - 40))
+            .attr('y1', yScale1(delta * (-40) + premium))
+            .attr('x2', xScale(Stock + 40))
+            .attr('y2', yScale1(delta * (40) + premium));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', stockX)
+            .attr('cy', yScale1(premium));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', stockX)
+            .attr('cy', yScale2(delta));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', xScale(Stock))
+            .attr('cy', yScale3(spotGamma));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', xScale(Stock))
+            .attr('cy', yScale4(spotVega));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', stockX)
+            .attr('cy', yScale5(theta));
+
+        svg.append('circle')
+            .attr('class', 'circleRed')
+            .attr('r', 4)
+            .attr('cx', stockX)
+            .attr('cy', yScale6(rho));
+
+
         // apply clip-path to all extra
         svg.selectAll('circle, line').attr('clip-path', 'url(#graph-clip)');
 
@@ -711,7 +648,7 @@
             .attr('stroke', '#a00000')
             .attr('stroke-width', 0);
 
-        svg.selectAll('.circleRed, .lineRed, .lineRef, .lineStrike, .lineForward')
+        svg.selectAll('.circleRed, .lineRed, .lineRef, .lineStrike, .lineForward, .curveBlue')
             .on("mouseover", function () {
                 var my_class = this.classList[0];
                 $(this).css('stroke-width', '4px');
@@ -732,6 +669,18 @@
                     case 'lineForward':
                         window.tooltipDiv.html("Forward");
                         break;
+
+                    case 'curveBlue':
+                        var id = this.id,
+                            name;
+                        if (id) {
+                            name = id.trim().replace('-line', '').toLowerCase();
+                            name = name[0].toUpperCase() + name.substr(1);
+                        }
+                        window.tooltipDiv.html(name);
+                        $(this).css('stroke-width', '');
+                        $(this).css('stroke', '#aad9ff');
+                        break;
                 }
 
                 window.tooltipDiv.transition()
@@ -743,6 +692,7 @@
             })
             .on("mouseout", function () {
                 $(this).css('stroke-width', '');
+                $(this).css('stroke', '');
                 window.tooltipDiv.transition()
                     .delay(500)
                     .duration(50)
@@ -750,7 +700,7 @@
             });
     }
 
-    var spotForward, callPremium, putPremium, callDelta, putDelta, spotGamma, spotVega, callTheta, putTheta, callRho, putRho;
+    var spotForward, premiumData, deltaData, spotGamma, spotVega, thetaData, rhoData;
 
     function update() {
         var Stock = parseInt($('#sliderStock').val()),
@@ -762,16 +712,24 @@
 
         var Drift = Q - R;
         spotForward = Forward(Stock, Mat, Q, R);
-        callPremium = BlackScholes('c', Stock, Strike, Mat, Q, R, Vol);
-        putPremium = BlackScholes('p', Stock, Strike, Mat, Q, R, Vol);
-        callDelta = Delta('c', Stock, Strike, Mat, Q, R, Vol);
-        putDelta = Delta('p', Stock, Strike, Mat, Q, R, Vol);
+        premiumData = {
+            'call': BlackScholes('c', Stock, Strike, Mat, Q, R, Vol),
+            'put': BlackScholes('p', Stock, Strike, Mat, Q, R, Vol)
+        };
+        deltaData = {
+            'call': Delta('c', Stock, Strike, Mat, Q, R, Vol),
+            'put': Delta('p', Stock, Strike, Mat, Q, R, Vol)
+        };
         spotGamma = Gamma(Stock, Strike, Mat, Q, R, Vol);
         spotVega = Vega(Stock, Strike, Mat, Q, R, Vol);
-        callTheta = Theta('c', Stock, Strike, Mat, Q, R, Vol);
-        putTheta = Theta('p', Stock, Strike, Mat, Q, R, Vol);
-        callRho = Rho('c', Stock, Strike, Mat, Q, R, Vol);
-        putRho = Rho('p', Stock, Strike, Mat, Q, R, Vol);
+        thetaData = {
+            'call': Theta('c', Stock, Strike, Mat, Q, R, Vol),
+            'put': Theta('p', Stock, Strike, Mat, Q, R, Vol)
+        };
+        rhoData = {
+            'call': Rho('c', Stock, Strike, Mat, Q, R, Vol),
+            'put': Rho('p', Stock, Strike, Mat, Q, R, Vol)
+        };
 
         $('#Drift').find('span').html((100 * Drift).toFixed(1));
         $('#Forward').find('span').html(spotForward.toFixed(2));
@@ -779,17 +737,17 @@
         $('.Gamma span').html((spotGamma).toFixed(4));
         $('.Vega span').html(spotVega.toFixed(2));
 
-        $('#callPremium').find('span').html(callPremium.toFixed(2));
-        $('#callPremiumPct').find('span').html((callPremium / Stock * 100).toFixed(2));
-        $('#callDelta').find('span').html(callDelta.toFixed(4));
-        $('#callTheta').find('span').html(callTheta.toFixed(4));
-        $('#callRho').find('span').html(callRho.toFixed(4));
+        $('#callPremium').find('span').html(premiumData['call'].toFixed(2));
+        $('#callPremiumPct').find('span').html((premiumData['call'] / Stock * 100).toFixed(2));
+        $('#callDelta').find('span').html(deltaData['call'].toFixed(4));
+        $('#callTheta').find('span').html(thetaData['call'].toFixed(4));
+        $('#callRho').find('span').html(rhoData['call'].toFixed(4));
 
-        $('#putPremium').find('span').html(putPremium.toFixed(2));
-        $('#putPremiumPct').find('span').html((putPremium / Stock * 100).toFixed(2));
-        $('#putDelta').find('span').html(putDelta.toFixed(4));
-        $('#putTheta').find('span').html(putTheta.toFixed(4));
-        $('#putRho').find('span').html(putRho.toFixed(4));
+        $('#putPremium').find('span').html(premiumData['put'].toFixed(2));
+        $('#putPremiumPct').find('span').html((premiumData['put'] / Stock * 100).toFixed(2));
+        $('#putDelta').find('span').html(deltaData['put'].toFixed(4));
+        $('#putTheta').find('span').html(thetaData['put'].toFixed(4));
+        $('#putRho').find('span').html(rhoData['put'].toFixed(4));
 
         callCurve(Strike, Mat, Q, R, Vol);
         putCurve(Strike, Mat, Q, R, Vol);
