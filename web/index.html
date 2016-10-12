@@ -28,11 +28,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            <h2><a href='https://first-finance.institute' target=_blank><img src='img/logo_ffi_48px.png'
-                                                                             title='First Finance Institute' width=32
-                                                                             style='vertical-align: top'></a>
-                Black-Scholes and Greeks</h2>
-            <p><dfn>Understanding how option pricing works</dfn></p>
+            <h2>
+                <a href='https://first-finance.institute' target=_blank>
+                    <img src='img/logo_ffi_48px.png' title='First Finance Institute' width='32'
+                         style='vertical-align: top'>
+                </a>
+                Black-Scholes and Greeks
+            </h2>
         </div>
     </div>
 
@@ -111,11 +113,13 @@
                 </tr>
                 <tr>
                     <td style="font-weight: bold">Gamma</td>
-                    <td colspan="2" class="Gamma" style="text-align: center"><span></span></td>
+                    <td class="call Gamma" style="text-align: right"><span></span></td>
+                    <td class="put Gamma" style="text-align: right"><span></span></td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold">Vega</td>
-                    <td colspan="2" class="Vega" style="text-align: center"><span></span></td>
+                    <td class="call Vega" style="text-align: right"><span></span></td>
+                    <td class="put Vega" style="text-align: right"><span></span></td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold">Theta</td>
@@ -127,33 +131,24 @@
                     <td class="call" id="callRho" style="text-align: right"><span></span></td>
                     <td class="put" id="putRho" style="text-align: right"><span></span></td>
                 </tr>
+
+                </tbody>
+            </table>
+
+            <table class="table table-condensed" id="divExtra">
+                <tbody>
                 <tr>
-                    <td style="font-weight: bold">Drift (=q-r)</td>
-                    <td id="Drift" style="text-align: center" colspan="2">
+                    <td style="font-weight: bold; width:30%;">Drift (=q-r)</td>
+                    <td id="Drift" style="text-align: right; width: 20%;">
                         <span>0</span>%
                     </td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold">Fwd</td>
-                    <td id="Forward" style="text-align: center" colspan="2">
+                    <td style="font-weight: bold; width: 30%;">Fwd</td>
+                    <td id="Forward" style="text-align: right; width: 20%;">
                         <span>100</span> $
                     </td>
                 </tr>
                 </tbody>
             </table>
-
-            <!-- <span style="padding-left:0px; padding-bottom:9px; font-size:14px">
-                             <strong>
-                                 Drift (q-r) =
-                                 <label id="Drift"><span></span>%</label>
-                             </strong>
-                         </span>
-             <span style="padding-left:0px;font-size:14px">
-                              <strong>
-                                  Fwd =
-                                  <label id="Forward"><span></span>$</label>
-                              </strong>
-             </span>-->
 
         </div>
         <div class="col-sm-7">
