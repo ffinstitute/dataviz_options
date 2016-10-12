@@ -154,8 +154,8 @@
         .attr('height', height);
 
     var rightMargin = 15,
-        leftMargin = 40;
-    var xScale = d3.scale.linear().range([40, width - rightMargin]);
+        leftMargin = 48;
+    var xScale = d3.scale.linear().range([leftMargin, width - rightMargin]);
 
     var yScale1 = d3.scale.linear().range([10, 170]),
         yScale2 = d3.scale.linear().range([180, 300]),
@@ -175,90 +175,52 @@
 
     function plotTitles() {
 
-        svg.selectAll('g.title').remove();
+        svg.selectAll('.title').remove();
 
-        var g0 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 70) + ",10)");
-        g0.append('rect')
-            .attr('width', 171)
-            .attr('height', 15)
-            .style('fill', "#FFF");
-        g0.append('text')
+            .attr('transform', "translate(11,175), rotate(270)")
             .text('Pay-out and Option Value')
-            .attr('y', 10)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        var g1, g2, g3, g4, g5;
-
-        g1 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 5) + ",180)");
-        g1.append('rect')
-            .attr('width', 35)
-            .attr('height', 20)
-            .style('fill', "#FFF");
-        g1.append('text')
+            .attr('transform', "translate(11,255), rotate(270)")
             .text('Delta')
-            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        g2 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 15) + ",310)");
-        g2.append('rect')
-            .attr('width', 52)
-            .attr('height', 20)
-            .style('fill', "#FFF");
-        g2.append('text')
+            .attr('transform', "translate(11,394), rotate(270)")
             .text('Gamma')
-            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        g3 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 4) + ",460)");
-        g3.append('rect')
-            .attr('width', 35)
-            .attr('height', 20)
-            .style('fill', "#FFF");
-        g3.append('text')
+            .attr('transform', "translate(11,516), rotate(270)")
             .text('Vega')
-            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        g4 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 15) + ",570)");
-        g4.append('rect')
-            .attr('width', 39)
-            .attr('height', 20)
-            .style('fill', "#FFF");
-        g4.append('text')
+            .attr('transform', "translate(11,650), rotate(270)")
             .text('Theta')
-            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
 
-        g5 = svg.append('g')
+        svg.append('text')
             .attr('class', 'title')
-            .attr('transform', "translate(" + (width / 2 - 15) + ",700)");
-        g5.append('rect')
-            .attr('width', 29)
-            .attr('height', 20)
-            .style('fill', "#FFF");
-        g5.append('text')
+            .attr('transform', "translate(11,772), rotate(270)")
             .text('Rho')
-            .attr('y', 15)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
