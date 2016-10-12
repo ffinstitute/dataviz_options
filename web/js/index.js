@@ -146,23 +146,23 @@
 
 
     var width = $('#divGraphs').width(),
-        height = 1130;
+        height = 840;
 
     var svg = d3.select('#allGraphs')
         .append('svg')
         .attr('width', width)
         .attr('height', height);
 
-    var rightMargin = 15;
-    var xScale = d3.scale.linear().range([50, width - rightMargin]);
+    var rightMargin = 15,
+        leftMargin = 40;
+    var xScale = d3.scale.linear().range([40, width - rightMargin]);
 
-    var yScale1 = d3.scale.linear().range([20, 200]),
-        yScale3 = d3.scale.linear().range([440, 560]),
-        yScale4 = d3.scale.linear().range([620, 740]),
-        yScale5 = d3.scale.linear().range([810, 930]),
-        yScale6 = d3.scale.linear().range([980, 1100]);
-
-    var yScale2;
+    var yScale1 = d3.scale.linear().range([10, 170]),
+        yScale2 = d3.scale.linear().range([180, 300]),
+        yScale3 = d3.scale.linear().range([310, 430]),
+        yScale4 = d3.scale.linear().range([440, 560]),
+        yScale5 = d3.scale.linear().range([570, 690]),
+        yScale6 = d3.scale.linear().range([700, 820]);
 
     function updateSize() {
         width = $('#divGraphs').width();
@@ -175,18 +175,18 @@
 
     function plotTitles() {
 
-        // svg.selectAll('text').remove();
+        svg.selectAll('g.title').remove();
 
         var g0 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,20)");
+            .attr('transform', "translate(" + (width / 2 - 70) + ",10)");
         g0.append('rect')
             .attr('width', 171)
-            .attr('height', 20)
+            .attr('height', 15)
             .style('fill', "#FFF");
         g0.append('text')
             .text('Pay-out and Option Value')
-            .attr('y', 15)
+            .attr('y', 10)
             .attr('font-size', 14)
             .attr('font-weight', 'bold')
             .attr('fill', 'gray');
@@ -195,7 +195,7 @@
 
         g1 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,260)");
+            .attr('transform', "translate(" + (width / 2 - 5) + ",180)");
         g1.append('rect')
             .attr('width', 35)
             .attr('height', 20)
@@ -209,7 +209,7 @@
 
         g2 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,440)");
+            .attr('transform', "translate(" + (width / 2 - 15) + ",310)");
         g2.append('rect')
             .attr('width', 52)
             .attr('height', 20)
@@ -223,7 +223,7 @@
 
         g3 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,620)");
+            .attr('transform', "translate(" + (width / 2 - 4) + ",460)");
         g3.append('rect')
             .attr('width', 35)
             .attr('height', 20)
@@ -237,7 +237,7 @@
 
         g4 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,820)");
+            .attr('transform', "translate(" + (width / 2 - 15) + ",570)");
         g4.append('rect')
             .attr('width', 39)
             .attr('height', 20)
@@ -251,7 +251,7 @@
 
         g5 = svg.append('g')
             .attr('class', 'title')
-            .attr('transform', "translate(50,980)");
+            .attr('transform', "translate(" + (width / 2 - 15) + ",700)");
         g5.append('rect')
             .attr('width', 29)
             .attr('height', 20)
@@ -379,74 +379,16 @@
 
     function plotAxes() {
 
-        svg.selectAll('g.axis').remove();
+        svg.selectAll('.axis').remove();
 
         var xAxis1 = d3.svg.axis()
-                .ticks(10)
-                .scale(xScale),
-            leftMargin = 40;
+            .ticks(10)
+            .scale(xScale);
 
-        if ($('#divPrices').hasClass('call')) {
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 380 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 560 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 740 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 810 + ')')
-                .call(xAxis1.orient('top'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 1100 + ')')
-                .call(xAxis1.orient('bottom'));
-        } else if ($('#divPrices').hasClass('put')) {
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 200 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 270 + ')')
-                .call(xAxis1.orient('top'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 560 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 740 + ')')
-                .call(xAxis1.orient('bottom'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 810 + ')')
-                .call(xAxis1.orient('top'));
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(' + 0 + ',' + 980 + ')')
-                .call(xAxis1.orient('top'));
-        }
+        svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', 'translate(' + 0 + ',' + 820 + ')')
+            .call(xAxis1.orient('bottom'));
 
 
         var yAxis1 = d3.svg.axis()
@@ -460,6 +402,18 @@
             .attr('class', 'axis')
             .attr('transform', 'translate(' + leftMargin + ', ' + 0 + ')')
             .call(yAxis1);
+
+
+        // add clip path for graph 1
+        svg.append('defs')
+            .attr('class', 'axis')
+            .append('clipPath')
+            .attr('id', 'graph1-clip')
+            .append('rect')
+            .attr('x', 40)
+            .attr('y', 10)
+            .attr('width', 445)
+            .attr('height', 160);
 
         var yAxis2 = d3.svg.axis()
             .ticks(5)
@@ -706,7 +660,8 @@
                 .attr('x1', xScale(Stock - 40))
                 .attr('y1', yScale1(callDelta * (-40) + callPremium))
                 .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(callDelta * (40) + callPremium));
+                .attr('y2', yScale1(callDelta * (40) + callPremium))
+                .attr('clip-path', 'url(#graph1-clip)');
 
         } else if ($('#divPrices').hasClass('put')) {
 
@@ -739,22 +694,23 @@
                 .attr('x1', xScale(Stock - 40))
                 .attr('y1', yScale1(putDelta * (-40) + putPremium))
                 .attr('x2', xScale(Stock + 40))
-                .attr('y2', yScale1(putDelta * (40) + putPremium));
+                .attr('y2', yScale1(putDelta * (40) + putPremium))
+                .attr('clip-path', 'url(#graph1-clip)');
         }
 
         svg.append('line')
             .attr('class', 'lineStrike')
             .attr('x1', xScale(Strike))
-            .attr('y1', 40)
+            .attr('y1', 10)
             .attr('x2', xScale(Strike))
-            .attr('y2', 1105);
+            .attr('y2', 820);
 
         svg.append('line')
             .attr('class', 'lineForward')
             .attr('x1', xScale(spotForward))
-            .attr('y1', 40)
+            .attr('y1', 10)
             .attr('x2', xScale(spotForward))
-            .attr('y2', 1105)
+            .attr('y2', 820)
             .style('stroke-dasharray', ('5, 5'));
 
         if ($('#divPrices').hasClass('call')) {
@@ -763,14 +719,16 @@
                 .attr('x1', xScale(Strike))
                 .attr('y1', yScale1(0))
                 .attr('x2', xScale(Strike * 2))
-                .attr('y2', yScale1(Strike));
+                .attr('y2', yScale1(Strike))
+                .attr('clip-path', 'url(#graph1-clip)');
         } else if ($('#divPrices').hasClass('put')) {
             svg.append('line')
                 .attr('class', 'lineRef')
                 .attr('x1', xScale(Strike))
                 .attr('y1', yScale1(0))
                 .attr('x2', xScale(0))
-                .attr('y2', yScale1(Strike));
+                .attr('y2', yScale1(Strike))
+                .attr('clip-path', 'url(#graph1-clip)');
         }
     }
 
@@ -856,19 +814,16 @@
             });
 
         xScale.domain([0, 2 * Strike]);
-
         yScale3.domain([Gmax, 0]);
-        yScale4.domain([Vmax, 0]);
 
+        yScale4.domain([Vmax, 0]);
         if ($('#divPrices').hasClass('call')) {
             yScale1.domain([ymaxcall, 0]);
-            yScale2 = d3.scale.linear().range([260, 380]);
             yScale2.domain([Dmaxcall, 0]);
             yScale5.domain([Tmaxcall, Tmincall]);
             yScale6.domain([Rmaxcall, 0]);
         } else if ($('#divPrices').hasClass('put')) {
             yScale1.domain([ymaxput, 0]);
-            yScale2 = d3.scale.linear().range([270, 390]);
             yScale2.domain([0, Dminput]);
             yScale5.domain([Tmaxput, Tminput]);
             yScale6.domain([0, Rminput]);
