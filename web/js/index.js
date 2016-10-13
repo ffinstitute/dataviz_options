@@ -339,6 +339,33 @@
         return putLineData;
     }
 
+    function plotBackground() {
+
+        svg.selectAll('.background').remove();
+
+        // for graph1
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('x', leftMargin)
+            .attr('y', 9)
+            .attr('width', width - rightMargin - leftMargin)
+            .attr('height', 162);
+        // for graph3
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('x', leftMargin)
+            .attr('y', 309)
+            .attr('width', width - rightMargin - leftMargin)
+            .attr('height', 122);
+        // for graph5
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('x', leftMargin)
+            .attr('y', 569)
+            .attr('width', width - rightMargin - leftMargin)
+            .attr('height', 122);
+    }
+
     function plotAxes() {
 
         svg.selectAll('.axis').remove();
@@ -543,10 +570,10 @@
 
         svg.selectAll('circle').remove();
         svg.selectAll('line').remove();
+        svg.selectAll('polyline').remove();
 
         var Stock = parseInt($('#sliderStock').val()),
             Strike = parseInt($('#sliderStrike').val());
-
 
         var stockX = xScale(Stock);
 
@@ -563,21 +590,29 @@
             rho = rhoData['put'];
         }
 
+        var lineRefData;
         if ($('#divPrices').hasClass('call')) {
-            svg.append('line')
-                .attr('class', 'lineRef')
-                .attr('x1', xScale(Strike))
-                .attr('y1', yScale1(0))
-                .attr('x2', xScale(Strike * 2))
-                .attr('y2', yScale1(Strike));
+            lineRefData = [
+                {x: 0, y: 0},
+                {x: Strike, y: 0},
+                {x: Strike * 2, y: Strike}
+            ];
         } else if ($('#divPrices').hasClass('put')) {
-            svg.append('line')
-                .attr('class', 'lineRef')
-                .attr('x1', xScale(Strike))
-                .attr('y1', yScale1(0))
-                .attr('x2', xScale(0))
-                .attr('y2', yScale1(Strike));
+            lineRefData = [
+                {x: 0, y: Strike},
+                {x: Strike, y: 0},
+                {x: Strike * 2, y: 0}
+            ];
         }
+        svg.selectAll('polyline')
+            .data([lineRefData])
+            .enter().append('polyline')
+            .attr('points', function (d) {
+                return d.map(function (d) {
+                    return [xScale(d.x), yScale1(d.y)].join(",");
+                }).join(",");
+            })
+            .attr('class', 'lineRef');
 
         svg.append('line')
             .attr('class', 'lineStrike')
@@ -636,7 +671,6 @@
             .attr('r', 4)
             .attr('cx', stockX)
             .attr('cy', yScale6(rho));
-
 
         // apply clip-path to all extra
         svg.selectAll('circle, line').attr('clip-path', 'url(#graph-clip)');
@@ -805,6 +839,7 @@
             yScale6.domain([0, Rminput]);
         }
 
+        plotBackground();
         plotAxes();
         plotGraphs();
         plotExtra();

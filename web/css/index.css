@@ -48,7 +48,8 @@ td.call, td.put {
 
 .lineRef {
     stroke: gray;
-    stroke-width: 2px;
+    stroke-width: 1px;
+    fill: none;
 }
 
 .circleRed {
@@ -61,7 +62,7 @@ td.call, td.put {
 }
 
 .lineForward {
-    stroke: SeaGreen;
+    stroke: #969696;
     stroke-width: 2px;
     shape-rendering: crispEdges;
 }
@@ -141,4 +142,8 @@ div.tooltip {
     pointer-events: none;
     color: #fff;
     font-weight: 200;
+}
+
+rect.background {
+    fill: #f1f1f1;
 }
