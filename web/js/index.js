@@ -568,7 +568,7 @@
 
     function plotExtra() {
 
-        svg.selectAll('circle').remove();
+        svg.selectAll('.spot').remove();
         svg.selectAll('line').remove();
         svg.selectAll('polyline').remove();
 
@@ -577,33 +577,31 @@
 
         var stockX = xScale(Stock);
 
-        var premium, delta, theta, rho;
+        var premium, delta, theta, rho, lineRefData;
         if ($('#divPrices').hasClass('call')) {
             premium = premiumData['call'];
             delta = deltaData['call'];
             theta = thetaData['call'];
             rho = rhoData['call'];
-        } else if ($('#divPrices').hasClass('put')) {
-            premium = premiumData['put'];
-            delta = deltaData['put'];
-            theta = thetaData['put'];
-            rho = rhoData['put'];
-        }
 
-        var lineRefData;
-        if ($('#divPrices').hasClass('call')) {
             lineRefData = [
                 {x: 0, y: 0},
                 {x: Strike, y: 0},
                 {x: Strike * 2, y: Strike}
             ];
         } else if ($('#divPrices').hasClass('put')) {
+            premium = premiumData['put'];
+            delta = deltaData['put'];
+            theta = thetaData['put'];
+            rho = rhoData['put'];
+
             lineRefData = [
                 {x: 0, y: Strike},
                 {x: Strike, y: 0},
                 {x: Strike * 2, y: 0}
             ];
         }
+
         svg.selectAll('polyline')
             .data([lineRefData])
             .enter().append('polyline')
@@ -629,44 +627,48 @@
             .attr('y2', 820)
             .style('stroke-dasharray', ('5, 5'));
 
-        svg.append('line')
+        var spotGroup = svg.append('g')
+            .attr()
+            .attr('class', 'spot');
+
+        spotGroup.append('line')
             .attr('class', 'lineRed')
             .attr('x1', xScale(Stock - 40))
             .attr('y1', yScale1(delta * (-40) + premium))
             .attr('x2', xScale(Stock + 40))
             .attr('y2', yScale1(delta * (40) + premium));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', stockX)
             .attr('cy', yScale1(premium));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', stockX)
             .attr('cy', yScale2(delta));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', xScale(Stock))
             .attr('cy', yScale3(spotGamma));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', xScale(Stock))
             .attr('cy', yScale4(spotVega));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', stockX)
             .attr('cy', yScale5(theta));
 
-        svg.append('circle')
+        spotGroup.append('circle')
             .attr('class', 'circleRed')
             .attr('r', 4)
             .attr('cx', stockX)
@@ -682,16 +684,11 @@
             .attr('stroke', '#a00000')
             .attr('stroke-width', 0);
 
-        svg.selectAll('.circleRed, .lineRed, .lineRef, .lineStrike, .lineForward, .curveBlue')
+        svg.selectAll('.spot, .lineRef, .lineStrike, .lineForward, .curveBlue')
             .on("mouseover", function () {
                 var my_class = this.classList[0];
                 $(this).css('stroke-width', '4px');
                 switch (my_class) {
-                    case 'circleRed':
-                    case 'lineRed':
-                        window.tooltipDiv.html("Spot");
-                        break;
-
                     case 'lineRef':
                         window.tooltipDiv.html("Reference");
                         break;
@@ -715,6 +712,11 @@
                         $(this).css('stroke-width', '');
                         $(this).css('stroke', '#aad9ff');
                         break;
+
+                    case 'spot':
+                        window.tooltipDiv.html("Spot");
+                        $(this).find('line,circle').css('stroke-width', '3px');
+                        break;
                 }
 
                 window.tooltipDiv.transition()
@@ -727,6 +729,7 @@
             .on("mouseout", function () {
                 $(this).css('stroke-width', '');
                 $(this).css('stroke', '');
+                $(this).find('line,circle').css('stroke-width', '');
                 window.tooltipDiv.transition()
                     .delay(500)
                     .duration(50)
